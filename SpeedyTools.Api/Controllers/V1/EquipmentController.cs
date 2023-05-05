@@ -11,7 +11,7 @@ namespace SpeedyTools.Api.Controllers.V1
         [Route("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok($"Version V1!{id}");
+            return Ok($"Version V{id}!");
         }
     }
 }
