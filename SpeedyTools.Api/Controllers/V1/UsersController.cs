@@ -5,11 +5,11 @@ namespace SpeedyTools.Api.Controllers.V1
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class EquipmentController : Controller
+    public class UsersController : Controller
     {
+        
         [HttpGet]
-        [Route("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById()
         {
             return Ok($"Version V{id}!");
         }

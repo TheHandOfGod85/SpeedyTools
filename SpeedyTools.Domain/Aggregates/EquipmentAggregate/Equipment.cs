@@ -3,9 +3,9 @@ namespace SpeedyTools.Domain.Aggregates.EquipmentAggregate
 {
     public class Equipment
     {
-        public Guid EquipmentId { get; private set; }
-        public string SerialNumber { get; private set; } 
-        public string Department { get; private set; }
+        public Guid EquipmentId { get; set; }
+        public string SerialNumber { get; set; } 
+        public string Department { get; set; }
 
     }
     
