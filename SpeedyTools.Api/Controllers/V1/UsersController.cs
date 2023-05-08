@@ -11,7 +11,7 @@ namespace SpeedyTools.Api.Controllers.V1
         [HttpGet]
         public IActionResult GetById()
         {
-            return Ok($"Version V{id}!");
+            return Ok($"Version V!");
         }
     }
 }
