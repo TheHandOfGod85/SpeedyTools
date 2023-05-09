@@ -12,6 +12,7 @@ namespace SpeedyTools.Api.Registers
             builder.Services.AddDataContext(configuration);
             builder.Services.AddRepositories();
             builder.Services.AddUnitsOfWork();
+            builder.Services.AddServices();
         }
     }
 }

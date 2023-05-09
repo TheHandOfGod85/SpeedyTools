@@ -19,6 +19,11 @@ namespace SpeedyTools.Api.Extensions
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             return services;
         }
+        public static IServiceCollection AddServices(this IServiceCollection services)
+        {
+            
+            return services;
+        }
 
         public static IServiceCollection AddDataContext(this IServiceCollection services,IConfiguration config)
         {
