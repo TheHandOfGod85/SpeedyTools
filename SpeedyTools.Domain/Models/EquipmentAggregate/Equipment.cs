@@ -1,5 +1,5 @@
 ﻿
-namespace SpeedyTools.Domain.Aggregates.EquipmentAggregate
+namespace SpeedyTools.Domain.Models.EquipmentAggregate
 {
     public class Equipment
     {

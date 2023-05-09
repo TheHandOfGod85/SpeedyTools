@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SpeedyTools.Domain.Aggregates.TicketAggregate;
-using SpeedyTools.Domain.Aggregates.UserAggregate;
+using SpeedyTools.Domain.Models.TicketAggregate;
+using SpeedyTools.Domain.Models.UserAggregate;
 
 namespace SpeedyTools.DataAccess
 {

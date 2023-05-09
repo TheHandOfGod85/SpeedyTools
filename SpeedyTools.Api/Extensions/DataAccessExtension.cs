@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SpeedyTools.DataAccess;
 using SpeedyTools.DataAccess.Repositories;
-using SpeedyTools.DataAccess.Repositories.Implementations;
-using SpeedyTools.DataAccess.Units;
-using SpeedyTools.DataAccess.Units.Implementations;
+using SpeedyTools.Domain.Interfaces.Repositories;
 
 namespace SpeedyTools.Api.Extensions
 {
@@ -11,13 +9,14 @@ namespace SpeedyTools.Api.Extensions
     {
         public static IServiceCollection AddUnitsOfWork(this IServiceCollection services)
         {
-            services.AddTransient<IRepositoryUnitOfWork, RepositoryUnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
 
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddTransient<IRepository,Repository>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IAppUserRepository, AppUserRepository>();
             return services;
         }
 

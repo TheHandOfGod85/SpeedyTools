@@ -1,5 +1,5 @@
 ﻿
-namespace SpeedyTools.Domain.Aggregates.UserAggregate
+namespace SpeedyTools.Domain.Models.UserAggregate
 {
     public class AppUser
     {

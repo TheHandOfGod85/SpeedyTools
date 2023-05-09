@@ -2,7 +2,7 @@
 
 namespace SpeedyTools.Api.Contracts
 {
-    public abstract class BaseContract<T> where T : SpeedyTools.Application.Contracts.BaseContract
+    public abstract class BaseContract<T> where T : class 
     {
         public abstract T Map();
         

@@ -1,7 +1,7 @@
-﻿using SpeedyTools.Domain.Aggregates.UserAggregate;
+﻿using SpeedyTools.Domain.Models.UserAggregate;
 
 
-namespace SpeedyTools.Domain.Aggregates.TicketAggregate
+namespace SpeedyTools.Domain.Models.TicketAggregate
 {
     public class Ticket
     {
