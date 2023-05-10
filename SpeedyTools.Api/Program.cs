@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Hosting;
 using SpeedyTools.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

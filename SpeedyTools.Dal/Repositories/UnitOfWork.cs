@@ -14,10 +14,8 @@ namespace SpeedyTools.DataAccess.Repositories
         public UnitOfWork(DataContext dataContext)
         {
             _dataContext = dataContext;
-            AppUser = new AppUserRepository(dataContext);
+            
         }
-
-        public IAppUserRepository AppUser { get; private set; }
 
         public int Complete()
         {

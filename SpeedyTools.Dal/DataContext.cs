@@ -1,24 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Domain.Models.TicketAggregate;
 using SpeedyTools.Domain.Models.UserAggregate;
+using System.Reflection.Emit;
 
 namespace SpeedyTools.DataAccess
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser>
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public DataContext(DbContextOptions options) : base(options)
         {
             
         }
-        public DbSet<AppUser> Users { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.Entity<AppUser>()
-                .Property(appuser => appuser.Role)
-                .HasConversion<string>();
+            base.OnModelCreating(builder);
         }
     }
 }

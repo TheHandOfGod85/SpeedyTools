@@ -20,7 +20,7 @@ namespace SpeedyTools.Api.Registers
                 config.GroupNameFormat = "'v'VVV";
                 config.SubstituteApiVersionInUrl = true;
             });
-
+            
             builder.Services.AddEndpointsApiExplorer();
         }
     }

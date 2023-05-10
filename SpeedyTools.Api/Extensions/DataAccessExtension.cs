@@ -1,7 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SpeedyTools.DataAccess;
 using SpeedyTools.DataAccess.Repositories;
 using SpeedyTools.Domain.Interfaces.Repositories;
+using SpeedyTools.Domain.Models.UserAggregate;
 
 namespace SpeedyTools.Api.Extensions
 {
@@ -16,7 +20,6 @@ namespace SpeedyTools.Api.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IAppUserRepository, AppUserRepository>();
             return services;
         }
         public static IServiceCollection AddServices(this IServiceCollection services)
@@ -32,6 +35,13 @@ namespace SpeedyTools.Api.Extensions
                 var connectionString = config.GetConnectionString("Default");
                 options.UseSqlServer(connectionString);
             });
+            services.AddIdentity<AppUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireLowercase = true;
+                opt.Password.RequiredLength = 5;
+            }).AddEntityFrameworkStores<DataContext>()
+            .AddDefaultTokenProviders();
             return services;
         }
     }

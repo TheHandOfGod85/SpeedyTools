@@ -8,7 +8,7 @@ namespace SpeedyTools.Domain.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IAppUserRepository AppUser { get; }
+        //IAppUserRepository AppUser { get; }
         int Complete();
     }
 }
