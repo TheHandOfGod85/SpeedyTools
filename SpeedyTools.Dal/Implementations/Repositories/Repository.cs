@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SpeedyTools.Domain.Interfaces.Repositories;
+using SpeedyTools.DataAccess.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.DataAccess.Repositories
+namespace SpeedyTools.DataAccess.Implementations.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {

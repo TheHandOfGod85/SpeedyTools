@@ -2,9 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using SpeedyTools.Application.Services.Implementations;
+using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.DataAccess;
-using SpeedyTools.DataAccess.Repositories;
-using SpeedyTools.Domain.Interfaces.Repositories;
+using SpeedyTools.DataAccess.Implementations;
+using SpeedyTools.DataAccess.Implementations.Repositories;
+using SpeedyTools.DataAccess.Interfaces;
+using SpeedyTools.DataAccess.Interfaces.Repositories;
 using SpeedyTools.Domain.Models.UserAggregate;
 
 namespace SpeedyTools.Api.Extensions
@@ -24,7 +28,8 @@ namespace SpeedyTools.Api.Extensions
         }
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddTransient<IEmailSender, EmailSender>();
             return services;
         }
 

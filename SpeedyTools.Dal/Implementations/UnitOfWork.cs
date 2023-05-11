@@ -1,11 +1,11 @@
-﻿using SpeedyTools.Domain.Interfaces.Repositories;
+﻿using SpeedyTools.DataAccess.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.DataAccess.Repositories
+namespace SpeedyTools.DataAccess.Implementations
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -14,7 +14,7 @@ namespace SpeedyTools.DataAccess.Repositories
         public UnitOfWork(DataContext dataContext)
         {
             _dataContext = dataContext;
-            
+
         }
 
         public int Complete()

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.Domain.Interfaces.Repositories
+namespace SpeedyTools.DataAccess.Interfaces.Repositories
 {
     public interface IRepository<T> where T : class
     {
