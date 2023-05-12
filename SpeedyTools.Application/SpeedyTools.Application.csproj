@@ -17,5 +17,9 @@
     <ProjectReference Include="..\SpeedyTools.Dal\SpeedyTools.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\Requests\" />
+  </ItemGroup>
+
 
 </Project>
