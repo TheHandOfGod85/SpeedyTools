@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.Application.Contracts
+namespace SpeedyTools.Application.Contracts.Requests
 {
     public record RegisterUserDto(string username);
 }

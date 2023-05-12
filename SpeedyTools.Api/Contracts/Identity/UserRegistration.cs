@@ -1,4 +1,4 @@
-﻿using SpeedyTools.Application.Contracts;
+﻿using SpeedyTools.Application.Contracts.Requests;
 using SpeedyTools.Domain.Models.UserAggregate;
 using System.ComponentModel.DataAnnotations;
 

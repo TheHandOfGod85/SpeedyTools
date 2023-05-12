@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using SpeedyTools.Api.Filters;
 
 namespace SpeedyTools.Api.Registers
 {
@@ -7,7 +8,10 @@ namespace SpeedyTools.Api.Registers
     {
         public void RegisterServices(WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(config =>
+            {
+                config.Filters.Add(typeof(ExceptionFilter));
+            });
             builder.Services.AddApiVersioning(config =>
             {
                 config.DefaultApiVersion = new ApiVersion(1, 0);

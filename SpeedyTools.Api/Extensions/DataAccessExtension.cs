@@ -30,6 +30,7 @@ namespace SpeedyTools.Api.Extensions
         {
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            
             return services;
         }
 

@@ -1,4 +1,5 @@
-﻿using SpeedyTools.Application.Contracts;
+﻿using SpeedyTools.Application.Contracts.Requests;
+using SpeedyTools.Application.Contracts.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace SpeedyTools.Application.Services.Interfaces
 {
     public interface IIdentityService
     {
-        public Task<string> RegisterUser(RegisterUserDto register);
+        public Task<ServiceResult<string>> RegisterUser(RegisterUserDto register);
     }
 }

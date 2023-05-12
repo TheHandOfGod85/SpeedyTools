@@ -22,7 +22,8 @@ namespace SpeedyTools.Api.Controllers.V1
         {
             var username = register.Map();
             var result = await _identityService.RegisterUser(username);
-            return Ok(result);
+            if(result.IsError) { return BadRequest(); }
+            return Ok(result.Payload);
         }
     }
 }
