@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.Application.Contracts.Responses
+namespace SpeedyTools.Application.Common
 {
     public class ServiceResult<T>
     {

@@ -10,8 +10,6 @@ namespace SpeedyTools.Api.Registers
             var serviceProvider = builder.Services.BuildServiceProvider();
             var configuration = serviceProvider.GetService<IConfiguration>();
             builder.Services.AddDataContext(configuration);
-            builder.Services.AddRepositories();
-            builder.Services.AddUnitsOfWork();
             builder.Services.AddServices();
         }
     }

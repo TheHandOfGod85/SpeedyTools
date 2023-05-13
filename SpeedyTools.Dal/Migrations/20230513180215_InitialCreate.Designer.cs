@@ -12,7 +12,7 @@ using SpeedyTools.DataAccess;
 namespace SpeedyTools.DataAccess.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230508173210_InitialCreate")]
+    [Migration("20230513180215_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,9 +25,9 @@ namespace SpeedyTools.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SpeedyTools.Domain.Aggregates.TicketAggregate.Ticket", b =>
+            modelBuilder.Entity("SpeedyTools.Domain.Models.TicketAggregate.Ticket", b =>
                 {
-                    b.Property<Guid>("TicketId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -51,16 +51,16 @@ namespace SpeedyTools.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TicketId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("SpeedyTools.Domain.Aggregates.UserAggregate.AppUser", b =>
+            modelBuilder.Entity("SpeedyTools.Domain.Models.UserAggregate.AppUser", b =>
                 {
-                    b.Property<Guid>("AppUserId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -72,22 +72,18 @@ namespace SpeedyTools.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Shift")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AppUserId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("AppUsers");
                 });
 
-            modelBuilder.Entity("SpeedyTools.Domain.Aggregates.TicketAggregate.Ticket", b =>
+            modelBuilder.Entity("SpeedyTools.Domain.Models.TicketAggregate.Ticket", b =>
                 {
-                    b.HasOne("SpeedyTools.Domain.Aggregates.UserAggregate.AppUser", "AppUser")
+                    b.HasOne("SpeedyTools.Domain.Models.UserAggregate.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)

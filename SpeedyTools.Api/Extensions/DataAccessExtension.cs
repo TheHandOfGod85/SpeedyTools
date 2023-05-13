@@ -1,27 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.DataAccess;
-using SpeedyTools.DataAccess.Implementations;
-using SpeedyTools.DataAccess.Implementations.Repositories;
-using SpeedyTools.DataAccess.Interfaces;
-using SpeedyTools.DataAccess.Interfaces.Repositories;
+
 
 namespace SpeedyTools.Api.Extensions
 {
     public static class DataAccessExtension
     {
-        public static IServiceCollection AddUnitsOfWork(this IServiceCollection services)
-        {
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            return services;
-        }
-
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
-        {
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            return services;
-        }
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssemblyContaining<CreateAppUserCommand>();
+            });
             
             return services;
         }

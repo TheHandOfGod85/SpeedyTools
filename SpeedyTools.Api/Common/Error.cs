@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace SpeedyTools.Api.Contracts.Responses
+namespace SpeedyTools.Api.Common
 {
     public class Error
     {
