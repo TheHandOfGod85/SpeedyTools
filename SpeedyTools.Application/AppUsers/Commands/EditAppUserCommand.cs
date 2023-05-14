@@ -33,9 +33,9 @@ namespace SpeedyTools.Application.AppUsers.Commands
         {
             var appUser = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id.ToString());
             if (appUser == null) { throw new Exception("User not found"); }
-            appUser.Name = request.Name ?? appUser.Name;
-            appUser.LastName = request.LastName ?? appUser.LastName;
-            appUser.Shift = request.Shift ?? appUser.Shift;
+            appUser.Name = request.Name;
+            appUser.LastName = request.LastName ;
+            appUser.Shift = request.Shift;
 
            var result = await _userManager.UpdateAsync(appUser);
             if (result.Succeeded) { return true; }
