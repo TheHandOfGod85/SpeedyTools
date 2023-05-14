@@ -1,13 +1,13 @@
 ﻿using SpeedyTools.Application.AppUsers.Commands;
-using System.ComponentModel.DataAnnotations;
 
-namespace SpeedyTools.Api.Contracts.AppUser.Requestes
+namespace SpeedyTools.Api.Contracts.AppUsers.Requestes
 {
     public class EditAppUserDto : BaseContract<EditAppUserCommand>
     {
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public string Shift { get; set; }
+        
+        public string? Name { get; set; }
+        public string? LastName { get; set; }
+        public string? Shift { get; set; }
 
 
 

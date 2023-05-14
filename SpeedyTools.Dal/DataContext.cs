@@ -5,7 +5,7 @@ using SpeedyTools.Domain.Models.UserAggregate;
 
 namespace SpeedyTools.DataAccess
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options) : base(options)
         {

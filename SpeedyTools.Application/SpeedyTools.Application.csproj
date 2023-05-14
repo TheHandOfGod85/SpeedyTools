@@ -16,10 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AppUsers\Commands\NewFolder\" />
     <Folder Include="AppUsers\Queries\" />
-    <Folder Include="Contracts\Requests\" />
-    <Folder Include="Contracts\Responses\" />
+    <Folder Include="Contracts\AppUsers\Requests\" />
   </ItemGroup>
 
 

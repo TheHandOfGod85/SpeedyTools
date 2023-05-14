@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Application.AppUsers.Commands;
+using SpeedyTools.Application.Services.Implementations;
+using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.DataAccess;
-
+using SpeedyTools.Domain.Models.UserAggregate;
 
 namespace SpeedyTools.Api.Extensions
 {
@@ -11,8 +14,9 @@ namespace SpeedyTools.Api.Extensions
         {
             services.AddMediatR(config =>
             {
-                config.RegisterServicesFromAssemblyContaining<CreateAppUserCommand>();
+                config.RegisterServicesFromAssemblyContaining<RegisterAppUserCommand>();
             });
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
             
             return services;
         }
@@ -24,6 +28,11 @@ namespace SpeedyTools.Api.Extensions
                 var connectionString = config.GetConnectionString("Default");
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 5;
+            }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
             return services;
         }
     }

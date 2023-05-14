@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace SpeedyTools.Api.Common
+namespace SpeedyTools.Api.Filters
 {
     public class Error
     {

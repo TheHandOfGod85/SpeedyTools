@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using SpeedyTools.Api.Common;
 
 namespace SpeedyTools.Api.Filters
 {

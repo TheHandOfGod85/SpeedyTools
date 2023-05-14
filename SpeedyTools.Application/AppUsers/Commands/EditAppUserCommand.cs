@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Errors.Model;
 using SpeedyTools.DataAccess;
+using SpeedyTools.Domain.Models.UserAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +12,34 @@ using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.AppUsers.Commands
 {
-    public class EditAppUserCommand : IRequest
+    public class EditAppUserCommand : IRequest<bool>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Shift { get; set; }
-    } 
-   
+    }
 
-    public class EditedAppUserCommandHandler : IRequestHandler<EditAppUserCommand>
+
+    public class EditedAppUserCommandHandler : IRequestHandler<EditAppUserCommand, bool>
     {
-        private readonly DataContext _dataContext;
+        private readonly UserManager<AppUser> _userManager;
 
-        public EditedAppUserCommandHandler(DataContext dataContext)
+        public EditedAppUserCommandHandler(UserManager<AppUser> userManager)
         {
-            _dataContext = dataContext;
+            _userManager = userManager;
         }
-        public async Task Handle(EditAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(EditAppUserCommand request, CancellationToken cancellationToken)
         {
-            var appUser = await _dataContext.AppUsers.FirstOrDefaultAsync(x => x.Id == request.Id);
+            var appUser = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id.ToString());
+            if (appUser == null) { throw new Exception("User not found"); }
+            appUser.Name = request.Name ?? appUser.Name;
+            appUser.LastName = request.LastName ?? appUser.LastName;
+            appUser.Shift = request.Shift ?? appUser.Shift;
 
-            if (appUser == null) { throw new NotFoundException("User not found"); }
-
-            appUser.Name = request.Name;
-            appUser.LastName = request.LastName;
-            appUser.Shift = request.Shift;
-
-            _dataContext.AppUsers.Update(appUser);
-            await _dataContext.SaveChangesAsync();
+           var result = await _userManager.UpdateAsync(appUser);
+            if (result.Succeeded) { return true; }
+            throw new Exception("User was not updated");
         }
     }
 }
