@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SpeedyTools.Api.Filters;
 
 namespace SpeedyTools.Api.Registers
 {
@@ -9,7 +8,7 @@ namespace SpeedyTools.Api.Registers
         {
             builder.Services.AddControllers(config =>
             {
-                config.Filters.Add(typeof(ExceptionFilter));
+                //config.Filters.Add(typeof(ExceptionFilter));
             });
             
             builder.Services.AddEndpointsApiExplorer();

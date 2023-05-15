@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpeedyTools.Api.Contracts.AppUsers.Requestes;
 using SpeedyTools.Application.AppUsers.Commands;
 
 namespace SpeedyTools.Api.Controllers
 {
-    [Route("user")]
+    [AllowAnonymous]
+    [Route("user/")]
     public class AccountController : BaseController
     {
         [HttpPost("register")]
@@ -21,7 +24,7 @@ namespace SpeedyTools.Api.Controllers
             var command = editAppUserDto.Map();
             command.Id = id;
             var result = await Mediator.Send(command);
-            return Ok(result);
+            return ProcessUpdate(result);
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(string email, string password)

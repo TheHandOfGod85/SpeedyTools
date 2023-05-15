@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SendGrid.Helpers.Errors.Model;
+using SpeedyTools.Application.Exceptions;
 using SpeedyTools.DataAccess;
 using SpeedyTools.Domain.Models.UserAggregate;
 using System;
@@ -32,14 +33,13 @@ namespace SpeedyTools.Application.AppUsers.Commands
         public async Task<bool> Handle(EditAppUserCommand request, CancellationToken cancellationToken)
         {
             var appUser = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.Id.ToString());
-            if (appUser == null) { throw new Exception("User not found"); }
+            if (appUser == null) { return false; }
             appUser.Name = request.Name;
             appUser.LastName = request.LastName ;
             appUser.Shift = request.Shift;
 
-           var result = await _userManager.UpdateAsync(appUser);
-            if (result.Succeeded) { return true; }
-            throw new Exception("User was not updated");
+            var result = await _userManager.UpdateAsync(appUser);
+            return result.Succeeded;
         }
     }
 }

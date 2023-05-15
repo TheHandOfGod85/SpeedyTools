@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using SpeedyTools.Application.Options;
 using SpeedyTools.Application.Services.Interfaces;
+using SpeedyTools.Domain.Models.UserAggregate;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,38 +16,33 @@ namespace SpeedyTools.Application.Services.Implementations
     public class JwtTokenService : IJwtTokenService
     {
         private readonly JwtSettings _jwtSettings;
-        private readonly byte[] _key;
         public JwtSecurityTokenHandler TokenHandler = new JwtSecurityTokenHandler();
 
         public JwtTokenService(IOptions<JwtSettings> jwtOptions)
         {
             _jwtSettings = jwtOptions.Value;
-            _key = Encoding.ASCII.GetBytes(_jwtSettings.SigningKey);
         }
 
-        public SecurityToken CreateSecurityToken(ClaimsIdentity identity)
-        {
-            var tokenDescriptor = GetTokenDescriptor(identity);
 
-            return TokenHandler.CreateToken(tokenDescriptor);
-        }
-
-        public string WriteToken(SecurityToken token)
+        public string GenerateTokenString(AppUser user)
         {
-            return TokenHandler.WriteToken(token);
-        }
-
-        private SecurityTokenDescriptor GetTokenDescriptor(ClaimsIdentity identity)
-        {
-            return new SecurityTokenDescriptor()
+            var claims = new List<Claim>
             {
-                Subject = identity,
-                Expires = DateTime.Now.AddHours(2),
-                Audience = _jwtSettings.Audiences[0],
-                Issuer = _jwtSettings.Issuer,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_key),
-                    SecurityAlgorithms.HmacSha256Signature)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SigningKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var tokendescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddMinutes(5),
+                SigningCredentials = creds
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokendescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

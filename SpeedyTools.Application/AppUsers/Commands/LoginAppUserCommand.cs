@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using SpeedyTools.Application.Contracts.AppUserS.Responses;
+using SpeedyTools.Application.Exceptions;
+using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.Domain.Models.UserAggregate;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.AppUsers.Commands
 {
-    public class LoginAppUserCommand : IRequest<AppUserDto>
+    public class LoginAppUserCommand : IRequest<string>
     {
         public LoginAppUserCommand(string email, string password)
         {
@@ -23,36 +25,24 @@ namespace SpeedyTools.Application.AppUsers.Commands
     }
 
 
-    public class LoginAppUserCommandHandler : IRequestHandler<LoginAppUserCommand, AppUserDto>
+    public class LoginAppUserCommandHandler : IRequestHandler<LoginAppUserCommand, string>
     {
         private readonly UserManager<AppUser> _userManager;
-        public LoginAppUserCommandHandler(UserManager<AppUser> userManager)
+        private readonly IJwtTokenService _jwt;
+
+        public LoginAppUserCommandHandler(UserManager<AppUser> userManager, IJwtTokenService jwt)
         {
             _userManager = userManager;
+            _jwt = jwt;
         }
 
-        public async Task<AppUserDto> Handle(LoginAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(LoginAppUserCommand request, CancellationToken cancellationToken)
         {
             var appUser = await _userManager.FindByEmailAsync(request.Email);
-            if (appUser == null)
-            {
-                throw new Exception("Email was not found");
-            }
+            
             var result = await _userManager.CheckPasswordAsync(appUser, request.Password);
-            if (result)
-            {
-                return new AppUserDto
-                {
-                    Email = appUser.Email,
-                    Name = appUser.Name,
-                    LastName = appUser.LastName,
-                    Shift = appUser.Shift
-                };
-            }
-            else
-            {
-                throw new Exception("Password was incorrect");
-            }
+            var token = _jwt.GenerateTokenString(appUser);
+            return token;
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using SpeedyTools.Application.Options;
 using System.Text;
@@ -28,16 +29,11 @@ namespace SpeedyTools.Api.Registers
                 jwt.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.SigningKey)),
-                    ValidateIssuer = true,
-                    ValidIssuer = jwtSettings.Issuer,
-                    ValidateAudience = true,
-                    ValidAudiences = jwtSettings.Audiences,
-                    RequireExpirationTime = false,
-                    ValidateLifetime = true
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SigningKey)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
                 };
-                jwt.Audience = jwtSettings.Audiences[0];
-                jwt.ClaimsIssuer = jwtSettings.Issuer;
             });
         }
     }

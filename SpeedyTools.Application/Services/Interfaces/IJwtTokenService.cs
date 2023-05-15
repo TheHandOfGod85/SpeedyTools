@@ -1,11 +1,9 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
+﻿using SpeedyTools.Domain.Models.UserAggregate;
 
 namespace SpeedyTools.Application.Services.Interfaces
 {
     public interface IJwtTokenService
     {
-        SecurityToken CreateSecurityToken(ClaimsIdentity identity);
-        string WriteToken(SecurityToken token);
+        string GenerateTokenString(AppUser user);
     }
 }

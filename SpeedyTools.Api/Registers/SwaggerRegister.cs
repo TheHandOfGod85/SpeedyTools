@@ -1,4 +1,6 @@
 ﻿
+using SpeedyTools.Api.Options;
+
 namespace SpeedyTools.Api.Registers
 {
     public class SwaggerRegister : IWebApplicationBuilderRegister
@@ -6,6 +8,7 @@ namespace SpeedyTools.Api.Registers
         public void RegisterServices(WebApplicationBuilder builder)
         {
             builder.Services.AddSwaggerGen();
+            builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
         }
     }
 }

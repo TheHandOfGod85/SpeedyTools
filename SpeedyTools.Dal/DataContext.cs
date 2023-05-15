@@ -19,6 +19,9 @@ namespace SpeedyTools.DataAccess
         {
             base.OnModelCreating(builder);
 
+
+
+            // example how to add a resource configuration
             //new AppUserConfiguration().Configure(builder.Entity<AppUser>());
         }
     }
