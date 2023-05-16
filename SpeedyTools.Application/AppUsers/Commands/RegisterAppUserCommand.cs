@@ -1,15 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using SpeedyTools.Application.Services.Implementations;
-using SpeedyTools.DataAccess;
+using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.Domain.Models.UserAggregate;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SpeedyTools.Application.AppUsers.Commands
 {
@@ -26,22 +19,21 @@ namespace SpeedyTools.Application.AppUsers.Commands
     public class RegisterAppUserCommandHandler : IRequestHandler<RegisterAppUserCommand, string>
     {
         private readonly UserManager<AppUser> _userManager;
-        //private readonly JwtTokenService _jwtTokenService;
+        private readonly ISendGridService _emailSender;
         public RegisterAppUserCommandHandler
             (
             UserManager<AppUser> userManager
-            //JwtTokenService jwtTokenService
-            )
+             , ISendGridService emailSender)
         {
             _userManager = userManager;
-            //_jwtTokenService = jwtTokenService;
+            _emailSender = emailSender;
         }
 
         public async Task<string> Handle(RegisterAppUserCommand request, CancellationToken cancellationToken)
         {
             if (_userManager.Users.Any(x => x.Email == request.UserName))
             {
-                throw new Exception("Email already exist");
+                return null;
             }
             var appUser = new AppUser
             {
@@ -53,7 +45,8 @@ namespace SpeedyTools.Application.AppUsers.Commands
             };
             var result = await _userManager.CreateAsync(appUser, request.Password);
             if (!result.Succeeded) { throw new Exception(message: $"{result.Errors.FirstOrDefault().Description}"); }
-            return appUser.Id;
+            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+            return emailConfirmationToken.ToString();
         }
     }
 }

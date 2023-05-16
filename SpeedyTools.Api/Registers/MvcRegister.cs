@@ -8,7 +8,11 @@ namespace SpeedyTools.Api.Registers
         {
             builder.Services.AddControllers(config =>
             {
-                //config.Filters.Add(typeof(ExceptionFilter));
+                //config.Filters.Add(typeof(ValidateModelFilter));
+            });
+            builder.Services.Configure<ApiBehaviorOptions>(config =>
+            {
+                //config.SuppressModelStateInvalidFilter = true;
             });
             
             builder.Services.AddEndpointsApiExplorer();

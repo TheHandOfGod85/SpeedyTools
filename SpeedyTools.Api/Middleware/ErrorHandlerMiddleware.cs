@@ -1,5 +1,4 @@
-﻿using SpeedyTools.Application.Exceptions;
-using System.Net;
+﻿using System.Net;
 
 namespace SpeedyTools.Api.Middleware
 {

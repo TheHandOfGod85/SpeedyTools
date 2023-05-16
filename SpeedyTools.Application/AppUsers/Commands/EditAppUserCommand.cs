@@ -1,15 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SendGrid.Helpers.Errors.Model;
-using SpeedyTools.Application.Exceptions;
-using SpeedyTools.DataAccess;
 using SpeedyTools.Domain.Models.UserAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SpeedyTools.Application.AppUsers.Commands
 {

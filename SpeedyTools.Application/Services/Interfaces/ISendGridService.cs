@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.Services.Interfaces
 {
-    public interface IEmailSenderService
+    public interface ISendGridService
     {
         Task SendEmailAsync(string userEmail, string emailSubject, string message);
     }

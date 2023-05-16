@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SpeedyTools.Api.Contracts.AppUsers.Requestes
 {
-    public class RegisterAppUserDto : BaseContract<RegisterAppUserCommand>
+    public class RegisterDto : BaseContract<RegisterAppUserCommand>
     {
         [EmailAddress]
         [Required]
@@ -34,7 +34,7 @@ namespace SpeedyTools.Api.Contracts.AppUsers.Requestes
                 Password = Password,
                 Name = Name,
                 LastName = LastName,
-                Shift = Shift
+                Shift = Shift,
             };
         }
     }

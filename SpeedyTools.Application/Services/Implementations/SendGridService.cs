@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.Services.Implementations
 {
-    public class EmailSenderService : IEmailSenderService
+    public class SendGridService : ISendGridService
     {
         private readonly IConfiguration _config;
 
-        public EmailSenderService(IConfiguration config)
+        public SendGridService(IConfiguration config)
         {
             _config = config;
         }

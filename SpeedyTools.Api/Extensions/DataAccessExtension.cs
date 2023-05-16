@@ -17,6 +17,7 @@ namespace SpeedyTools.Api.Extensions
                 config.RegisterServicesFromAssemblyContaining<RegisterAppUserCommand>();
             });
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<ISendGridService, SendGridService>();
             
             return services;
         }
