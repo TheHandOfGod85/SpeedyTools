@@ -11,9 +11,9 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.Application.Services.Implementations
+namespace SpeedyTools.DataAccess.Services.Implementations
 {
-    public class JwtTokenService : IJwtTokenService
+    public class JwtTokenService : ITokenService
     {
         private readonly JwtSettings _jwtSettings;
         public JwtSecurityTokenHandler TokenHandler = new JwtSecurityTokenHandler();

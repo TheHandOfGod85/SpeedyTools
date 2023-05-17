@@ -2,7 +2,7 @@
 
 namespace SpeedyTools.Application.Services.Interfaces
 {
-    public interface IJwtTokenService
+    public interface ITokenService
     {
         string GenerateTokenString(AppUser user);
     }

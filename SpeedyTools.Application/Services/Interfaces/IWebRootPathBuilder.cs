@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.Services.Interfaces
 {
-    public interface ISendGridService
+    public interface IWebRootPathBuilder
     {
-        Task SendEmailAsync(string userEmail, string emailSubject, string message);
+        string GetWebRootPath(string folderName, string fileName);
     }
 }

@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeedyTools.Api", "SpeedyTo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeedyTools.Application", "SpeedyTools.Application\SpeedyTools.Application.csproj", "{4572016B-68C4-44C8-AA6E-5B5F07959B50}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeedyTools.DataAccess", "SpeedyTools.Dal\SpeedyTools.DataAccess.csproj", "{9DD661DD-36B6-4550-9863-C9F7F29074E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeedyTools.Infrastructure", "SpeedyTools.Dal\SpeedyTools.Infrastructure.csproj", "{9DD661DD-36B6-4550-9863-C9F7F29074E6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeedyTools.Domain", "SpeedyTools.Domain\SpeedyTools.Domain.csproj", "{60B74607-F476-4B61-9140-CA0B736FCCC7}"
 EndProject

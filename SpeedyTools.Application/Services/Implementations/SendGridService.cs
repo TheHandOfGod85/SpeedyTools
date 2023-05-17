@@ -9,9 +9,9 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.Application.Services.Implementations
+namespace SpeedyTools.DataAccess.Services.Implementations
 {
-    public class SendGridService : ISendGridService
+    public class SendGridService : IEmailService
     {
         private readonly IConfiguration _config;
 

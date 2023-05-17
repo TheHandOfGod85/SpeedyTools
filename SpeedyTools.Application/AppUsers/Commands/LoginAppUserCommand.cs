@@ -15,9 +15,9 @@ namespace SpeedyTools.Application.AppUsers.Commands
     public class LoginAppUserCommandHandler : IRequestHandler<LoginAppUserCommand, string>
     {
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IJwtTokenService _jwt;
+        private readonly ITokenService _jwt;
 
-        public LoginAppUserCommandHandler(IJwtTokenService jwt, SignInManager<AppUser> signInManager)
+        public LoginAppUserCommandHandler(ITokenService jwt, SignInManager<AppUser> signInManager)
         {
             _jwt = jwt;
             _signInManager = signInManager;

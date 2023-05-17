@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpeedyTools.Dal\SpeedyTools.DataAccess.csproj" />
+    <ProjectReference Include="..\SpeedyTools.Dal\SpeedyTools.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

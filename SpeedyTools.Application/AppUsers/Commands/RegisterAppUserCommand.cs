@@ -19,14 +19,27 @@ namespace SpeedyTools.Application.AppUsers.Commands
     public class RegisterAppUserCommandHandler : IRequestHandler<RegisterAppUserCommand, string>
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly ISendGridService _emailSender;
+        private readonly IEmailService _emailSender;
+        private readonly IEncoderService _encoderService;
+        private readonly IApiContextAccessor _contextAccessor;
+        private readonly IFileService _fileService;
+        private readonly IWebRootPathBuilder _rootPathBuilder;
+
         public RegisterAppUserCommandHandler
             (
-            UserManager<AppUser> userManager
-             , ISendGridService emailSender)
+            UserManager<AppUser> userManager,
+               IEmailService emailSender,
+               IEncoderService encoderService,
+               IApiContextAccessor contextAccessor,
+               IFileService fileService,
+               IWebRootPathBuilder rootPathBuilder)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _encoderService = encoderService;
+            _contextAccessor = contextAccessor;
+            _fileService = fileService;
+            _rootPathBuilder = rootPathBuilder;
         }
 
         public async Task<string> Handle(RegisterAppUserCommand request, CancellationToken cancellationToken)
@@ -45,8 +58,18 @@ namespace SpeedyTools.Application.AppUsers.Commands
             };
             var result = await _userManager.CreateAsync(appUser, request.Password);
             if (!result.Succeeded) { throw new Exception(message: $"{result.Errors.FirstOrDefault().Description}"); }
-            var emailConfirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-            return emailConfirmationToken.ToString();
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+            _encoderService.Encode(token);
+            var origin = _contextAccessor.GetOrigin();
+            var verifyUrl = $"{origin}/user/verifyEmail?token={token}&email={appUser.UserName}";
+            var pathToFile = _rootPathBuilder.GetWebRootPath("Templates", "EmailConfirmationTemplate.html");
+            var htmlBody = "";
+            var htmlBodyRead = _fileService.ReadFile(pathToFile, htmlBody);
+            htmlBodyRead = htmlBodyRead.Replace("{0}", request.UserName);
+            htmlBodyRead = htmlBodyRead.Replace("{1}", verifyUrl);
+            htmlBodyRead = htmlBodyRead.Replace("{2}", verifyUrl);
+            await _emailSender.SendEmailAsync(appUser.UserName, "Please verify email", htmlBodyRead);
+            return token.ToString();
         }
     }
 }
