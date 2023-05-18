@@ -1,31 +1,35 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json.Linq;
 using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.Domain.Models.UserAggregate;
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.AppUsers.Commands
 {
-    public class RegisterAppUserCommand : IRequest<string>
+    public class ResendConfirmationEmailCommand : IRequest<string>
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public string Shift { get; set; }
+        public ResendConfirmationEmailCommand(string email)
+        {
+            Email = email;
+        }
+        public string Email { get; set; }
     }
 
-
-    public class RegisterAppUserCommandHandler : IRequestHandler<RegisterAppUserCommand, string>
+    public class ResendConfirmationEmailCommandHandler : IRequestHandler<ResendConfirmationEmailCommand, string>
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IEmailService _emailSender;
         private readonly IEncoderService _encoderService;
         private readonly IApiContextAccessor _contextAccessor;
-        private readonly IHtmlProcessor _htmlProcessor;
         private readonly IWebRootPathBuilder _rootPathBuilder;
+        private readonly IHtmlProcessor _htmlProcessor;
 
-        public RegisterAppUserCommandHandler
+        public ResendConfirmationEmailCommandHandler
             (
             UserManager<AppUser> userManager,
                IEmailService emailSender,
@@ -42,38 +46,21 @@ namespace SpeedyTools.Application.AppUsers.Commands
             _htmlProcessor = htmlProcessor;
         }
 
-        public async Task<string> Handle(RegisterAppUserCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(ResendConfirmationEmailCommand request, CancellationToken cancellationToken)
         {
-            if (_userManager.Users.Any(x => x.Email == request.UserName))
-            {
-                return null;
-            }
-            AppUser appUser = CreateUser(request);
-            var result = await _userManager.CreateAsync(appUser, request.Password);
-            if (!result.Succeeded) { throw new Exception(message: $"{result.Errors.FirstOrDefault().Description}"); }
+            var appUser = await _userManager.FindByEmailAsync(request.Email);
+            if (appUser == null) { return null; }
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
             _encoderService.Encode(token);
             var origin = _contextAccessor.GetOrigin();
             var verifyUrl = $"{origin}/user/verifyEmail?token={token}&email={appUser.UserName}";
             var pathToFile = _rootPathBuilder.GetWebRootPath("Templates", "EmailConfirmationTemplate.html");
             string htmlBodyRead = _htmlProcessor.ProcessHtml(pathToFile);
-            htmlBodyRead = htmlBodyRead.Replace("{0}", request.UserName);
+            htmlBodyRead = htmlBodyRead.Replace("{0}", request.Email);
             htmlBodyRead = htmlBodyRead.Replace("{1}", verifyUrl);
             htmlBodyRead = htmlBodyRead.Replace("{2}", verifyUrl);
             await _emailSender.SendEmailAsync(appUser.UserName, "Please verify email", htmlBodyRead);
-            return token.ToString();
-        }
-
-        private static AppUser CreateUser(RegisterAppUserCommand request)
-        {
-            return new AppUser
-            {
-                Email = request.UserName,
-                UserName = request.UserName,
-                Name = request.Name,
-                LastName = request.LastName,
-                Shift = request.Shift,
-            };
+            return "Email verification link resent";
         }
     }
 }

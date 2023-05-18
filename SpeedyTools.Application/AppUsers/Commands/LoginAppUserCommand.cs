@@ -16,19 +16,25 @@ namespace SpeedyTools.Application.AppUsers.Commands
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _jwt;
+        private readonly UserManager<AppUser> _userManager;
 
-        public LoginAppUserCommandHandler(ITokenService jwt, SignInManager<AppUser> signInManager)
+        public LoginAppUserCommandHandler(
+            ITokenService jwt,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager)
         {
             _jwt = jwt;
+            _userManager = userManager;
             _signInManager = signInManager;
         }
 
         public async Task<string> Handle(LoginAppUserCommand request, CancellationToken cancellationToken)
         {
-            var signInResult = await _signInManager.PasswordSignInAsync(request.Email, request.Password, false, lockoutOnFailure: false);
+            var appUser = await _userManager.FindByEmailAsync(request.Email);
+            if (appUser == null) { return "Wrong"; }
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(appUser, request.Password,false);
             if (signInResult.Succeeded)
             {
-                var appUser = await _signInManager.UserManager.FindByEmailAsync(request.Email);
                 var token = _jwt.GenerateTokenString(appUser);
                 return token;
             }

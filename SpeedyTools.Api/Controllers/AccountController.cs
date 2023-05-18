@@ -30,7 +30,8 @@ namespace SpeedyTools.Api.Controllers
         {
             var command = loginDto.Map();
             var result = await Mediator.Send(command);
-            if(result is null) { return BadRequest("Wrong email or password"); }
+            if(result is "Wrong") { return BadRequest("Wrong email or password"); }
+            if(result is null) { return Unauthorized("Please, confirm your email"); }
             return Ok(result);
         }
         [HttpPost("createRole")]
@@ -39,11 +40,18 @@ namespace SpeedyTools.Api.Controllers
             var result = await Mediator.Send(new CreateRoleCommand(roleName));
             return Ok(result);
         }
-        [HttpGet("confirmAccount")]
-        public async Task<IActionResult> ConfirmAccount(string token, string email)
+        [HttpGet("verifyEmail")]
+        public async Task<IActionResult> VerifyEmail(string token, string email)
         {
             var result = await Mediator.Send(new ConfirmEmailCommand(token, email));
-            if(result is null) { return NotFound("Email not found"); }
+            if(result is null) { return BadRequest(result); }
+            return Ok(result);
+        }
+        [HttpGet("resendEmailConfirmationLink")]
+        public async Task<IActionResult> ResendEmailConfirmationLink(string email)
+        {
+            var result = await Mediator.Send(new ResendConfirmationEmailCommand(email));
+            if(result is null) { return Unauthorized(); }
             return Ok(result);
         }
     }

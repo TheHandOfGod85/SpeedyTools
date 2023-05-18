@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.Services.Interfaces
 {
-    public interface IEncoderService
+    public interface IHtmlProcessor
     {
-        void Encode(string input);
-        string Decode(string input);
+        string ProcessHtml(string html);
     }
 }

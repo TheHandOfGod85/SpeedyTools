@@ -4,6 +4,7 @@ using SpeedyTools.Api.Services.Implementations;
 using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.Application.Services.Implementations;
 using SpeedyTools.Application.Services.Interfaces;
+using SpeedyTools.Application.Utilities;
 using SpeedyTools.DataAccess;
 using SpeedyTools.DataAccess.Services.Implementations;
 using SpeedyTools.Domain.Models.UserAggregate;
@@ -24,6 +25,7 @@ namespace SpeedyTools.Api.Extensions
             services.AddScoped<IApiContextAccessor, WebApiContextService>();
             services.AddScoped<IEncoderService, WebEncoderService>();
             services.AddScoped<IWebRootPathBuilder, WebRootPathBuilderService>();
+            services.AddScoped<IHtmlProcessor, HtmlProcessor>();
             
             return services;
         }
@@ -39,7 +41,10 @@ namespace SpeedyTools.Api.Extensions
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 5;
-            }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+                options.SignIn.RequireConfirmedEmail = true;
+            }).AddEntityFrameworkStores<DataContext>()
+              .AddSignInManager<SignInManager<AppUser>>()
+              .AddDefaultTokenProviders();
             return services;
         }
     }

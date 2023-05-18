@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.Domain.Models.UserAggregate;
 using System;
 using System.Collections.Generic;
@@ -23,18 +24,20 @@ namespace SpeedyTools.Application.AppUsers.Commands
     public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, string>
     {
         private readonly UserManager<AppUser> _userManager;
-
-        public ConfirmEmailCommandHandler(UserManager<AppUser> userManager)
+        private readonly IEncoderService _encoderService;
+        public ConfirmEmailCommandHandler(UserManager<AppUser> userManager, IEncoderService encoderService)
         {
             _userManager = userManager;
+            _encoderService = encoderService;
         }
         public async Task<string> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
             var appUser = await _userManager.FindByEmailAsync(request.Email);
             if (appUser == null) { return null; }
-            var result = await _userManager.ConfirmEmailAsync(appUser, request.Token);
-            if (result.Succeeded) { return "Thank you for confirming your email."; }
-            return "Something went wrong, try again.";
+            var decodedToken = _encoderService.Decode(request.Token);
+            var result = await _userManager.ConfirmEmailAsync(appUser, decodedToken);
+            if (result.Succeeded) { return "Email confirmed, you can now login."; }
+            return "Could not verify email address.";
         }
     }
 }
