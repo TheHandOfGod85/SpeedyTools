@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.Application.Tickets.CreateTicketCommand
+namespace SpeedyTools.Application.Tickets
 {
     public class CreateTicketCommand : IRequest<Guid>
     {
