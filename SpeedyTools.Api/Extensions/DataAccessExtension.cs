@@ -4,7 +4,6 @@ using SpeedyTools.Api.Services.Implementations;
 using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.Application.Services.Implementations;
 using SpeedyTools.Application.Services.Interfaces;
-using SpeedyTools.Application.Utilities;
 using SpeedyTools.DataAccess;
 using SpeedyTools.DataAccess.Services.Implementations;
 using SpeedyTools.Domain.Models.UserAggregate;

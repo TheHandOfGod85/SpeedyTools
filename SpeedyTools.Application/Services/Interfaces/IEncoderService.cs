@@ -8,7 +8,7 @@ namespace SpeedyTools.Application.Services.Interfaces
 {
     public interface IEncoderService
     {
-        void Encode(string input);
+        string Encode(string input);
         string Decode(string input);
     }
 }

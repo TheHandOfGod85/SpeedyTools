@@ -8,6 +8,6 @@ namespace SpeedyTools.Application.Services.Interfaces
 {
     public interface IHtmlProcessor
     {
-        string ProcessHtml(string html);
+        string ProcessHtml(string html, List<string> replacements);
     }
 }

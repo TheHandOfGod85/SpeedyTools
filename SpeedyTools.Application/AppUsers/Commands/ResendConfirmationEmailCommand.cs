@@ -51,14 +51,12 @@ namespace SpeedyTools.Application.AppUsers.Commands
             var appUser = await _userManager.FindByEmailAsync(request.Email);
             if (appUser == null) { return null; }
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-            _encoderService.Encode(token);
+            var encodedToken = _encoderService.Encode(token);
             var origin = _contextAccessor.GetOrigin();
-            var verifyUrl = $"{origin}/user/verifyEmail?token={token}&email={appUser.UserName}";
+            var verifyUrl = $"{origin}/user/verifyEmail?token={encodedToken}&email={appUser.UserName}";
             var pathToFile = _rootPathBuilder.GetWebRootPath("Templates", "EmailConfirmationTemplate.html");
-            string htmlBodyRead = _htmlProcessor.ProcessHtml(pathToFile);
-            htmlBodyRead = htmlBodyRead.Replace("{0}", request.Email);
-            htmlBodyRead = htmlBodyRead.Replace("{1}", verifyUrl);
-            htmlBodyRead = htmlBodyRead.Replace("{2}", verifyUrl);
+            List<string> replacements = new List<string> { request.Email, verifyUrl, verifyUrl };
+            string htmlBodyRead = _htmlProcessor.ProcessHtml(pathToFile, replacements);
             await _emailSender.SendEmailAsync(appUser.UserName, "Please verify email", htmlBodyRead);
             return "Email verification link resent";
         }

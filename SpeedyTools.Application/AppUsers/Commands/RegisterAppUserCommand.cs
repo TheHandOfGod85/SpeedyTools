@@ -52,16 +52,14 @@ namespace SpeedyTools.Application.AppUsers.Commands
             var result = await _userManager.CreateAsync(appUser, request.Password);
             if (!result.Succeeded) { throw new Exception(message: $"{result.Errors.FirstOrDefault().Description}"); }
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-            _encoderService.Encode(token);
+            var encodedToken =_encoderService.Encode(token);
             var origin = _contextAccessor.GetOrigin();
-            var verifyUrl = $"{origin}/user/verifyEmail?token={token}&email={appUser.UserName}";
+            var verifyUrl = $"{origin}/user/verifyEmail?token={encodedToken}&email={appUser.UserName}";
             var pathToFile = _rootPathBuilder.GetWebRootPath("Templates", "EmailConfirmationTemplate.html");
-            string htmlBodyRead = _htmlProcessor.ProcessHtml(pathToFile);
-            htmlBodyRead = htmlBodyRead.Replace("{0}", request.UserName);
-            htmlBodyRead = htmlBodyRead.Replace("{1}", verifyUrl);
-            htmlBodyRead = htmlBodyRead.Replace("{2}", verifyUrl);
+            List<string> replacements = new List<string> { request.UserName, verifyUrl, verifyUrl };
+            string htmlBodyRead = _htmlProcessor.ProcessHtml(pathToFile, replacements);
             await _emailSender.SendEmailAsync(appUser.UserName, "Please verify email", htmlBodyRead);
-            return token.ToString();
+            return encodedToken.ToString();
         }
 
         private static AppUser CreateUser(RegisterAppUserCommand request)

@@ -13,9 +13,10 @@ namespace SpeedyTools.Api.Services.Implementations
             return decodedToken;
         }
 
-        public void Encode(string input)
+        public string Encode(string input)
         {
-            WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(input));
+           var encoded = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(input));
+            return encoded;
         }
     }
 }
