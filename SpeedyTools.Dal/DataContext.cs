@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Domain.Models.TicketAggregate;
 using SpeedyTools.Domain.Models.UserAggregate;
 
-namespace SpeedyTools.DataAccess
+namespace SpeedyTools.Infrastructure
 {
     public class DataContext : IdentityDbContext<AppUser>
     {
         public DataContext(DbContextOptions options) : base(options)
         {
-            
+
         }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }

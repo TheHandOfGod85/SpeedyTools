@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using SpeedyTools.Api.Middleware;
+using SpeedyTools.Infrastructure;
 
 namespace SpeedyTools.Api.Registers
 {
@@ -17,7 +18,6 @@ namespace SpeedyTools.Api.Registers
             app.UseAuthorization();
 
             app.UseStaticFiles();
-
 
             app.MapControllers();
         }

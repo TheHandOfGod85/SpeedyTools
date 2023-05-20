@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpeedyTools.DataAccess;
+using SpeedyTools.Infrastructure;
 
 #nullable disable
 
-namespace SpeedyTools.DataAccess.Migrations
+namespace SpeedyTools.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230514152518_IdentityAdded")]
-    partial class IdentityAdded
+    [Migration("20230520111954_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,7 +168,6 @@ namespace SpeedyTools.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AppUserId1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Closed")
@@ -215,7 +214,6 @@ namespace SpeedyTools.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -225,7 +223,6 @@ namespace SpeedyTools.DataAccess.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -249,7 +246,6 @@ namespace SpeedyTools.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Shift")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -326,12 +322,15 @@ namespace SpeedyTools.DataAccess.Migrations
             modelBuilder.Entity("SpeedyTools.Domain.Models.TicketAggregate.Ticket", b =>
                 {
                     b.HasOne("SpeedyTools.Domain.Models.UserAggregate.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Tickets")
+                        .HasForeignKey("AppUserId1");
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("SpeedyTools.Domain.Models.UserAggregate.AppUser", b =>
+                {
+                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }

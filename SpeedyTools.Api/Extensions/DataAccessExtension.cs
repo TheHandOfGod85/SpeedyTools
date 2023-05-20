@@ -4,9 +4,8 @@ using SpeedyTools.Api.Services.Implementations;
 using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.Application.Services.Implementations;
 using SpeedyTools.Application.Services.Interfaces;
-using SpeedyTools.DataAccess;
-using SpeedyTools.DataAccess.Services.Implementations;
 using SpeedyTools.Domain.Models.UserAggregate;
+using SpeedyTools.Infrastructure;
 
 namespace SpeedyTools.Api.Extensions
 {
@@ -25,6 +24,7 @@ namespace SpeedyTools.Api.Extensions
             services.AddScoped<IEncoderService, WebEncoderService>();
             services.AddScoped<IWebRootPathBuilder, WebRootPathBuilderService>();
             services.AddScoped<IHtmlProcessor, HtmlProcessor>();
+            services.AddTransient<SampleData>();
             
             return services;
         }

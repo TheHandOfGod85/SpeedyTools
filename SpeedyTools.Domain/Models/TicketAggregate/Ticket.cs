@@ -1,5 +1,5 @@
 ﻿using SpeedyTools.Domain.Models.UserAggregate;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SpeedyTools.Domain.Models.TicketAggregate
 {
@@ -11,7 +11,9 @@ namespace SpeedyTools.Domain.Models.TicketAggregate
         public DateTime Closed { get; set; }
         public string Description { get;  set; }
         public DateTime LastModified { get;  set; }
+
+        [ForeignKey(nameof(AppUserId))]
         public Guid AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        public AppUser? AppUser { get; set; }
     }
 }

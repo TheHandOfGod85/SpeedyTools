@@ -1,10 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BCrypt.Net;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpeedyTools.Domain.Models.UserAggregate
 {
@@ -12,7 +8,7 @@ namespace SpeedyTools.Domain.Models.UserAggregate
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-           
+            
         }
     }
 }

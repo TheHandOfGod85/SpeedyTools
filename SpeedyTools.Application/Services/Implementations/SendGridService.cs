@@ -9,7 +9,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpeedyTools.DataAccess.Services.Implementations
+namespace SpeedyTools.Application.Services.Implementations
 {
     public class SendGridService : IEmailService
     {

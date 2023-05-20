@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\AppUsers\Responses\" />
+    <Folder Include="Contracts\Tickets\Responses\" />
   </ItemGroup>
 
 </Project>

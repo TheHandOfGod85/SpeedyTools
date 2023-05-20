@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SpeedyTools.DataAccess;
+using SpeedyTools.Infrastructure;
 
 #nullable disable
 
-namespace SpeedyTools.DataAccess.Migrations
+namespace SpeedyTools.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -165,7 +165,6 @@ namespace SpeedyTools.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AppUserId1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Closed")
@@ -320,12 +319,15 @@ namespace SpeedyTools.DataAccess.Migrations
             modelBuilder.Entity("SpeedyTools.Domain.Models.TicketAggregate.Ticket", b =>
                 {
                     b.HasOne("SpeedyTools.Domain.Models.UserAggregate.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Tickets")
+                        .HasForeignKey("AppUserId1");
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("SpeedyTools.Domain.Models.UserAggregate.AppUser", b =>
+                {
+                    b.Navigation("Tickets");
                 });
 #pragma warning restore 612, 618
         }
