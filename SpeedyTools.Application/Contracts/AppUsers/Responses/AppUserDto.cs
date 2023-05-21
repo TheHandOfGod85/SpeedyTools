@@ -1,9 +1,5 @@
-﻿using SpeedyTools.Domain.Models.UserAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SpeedyTools.Application.Contracts.Tickets.Responses;
+using SpeedyTools.Domain.Models.UserAggregate;
 
 namespace SpeedyTools.Application.Contracts.AppUserS.Responses
 {
@@ -13,5 +9,6 @@ namespace SpeedyTools.Application.Contracts.AppUserS.Responses
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Shift { get; set; }
+        public  List<TicketDto> Tickets { get; set; }
     }
 }

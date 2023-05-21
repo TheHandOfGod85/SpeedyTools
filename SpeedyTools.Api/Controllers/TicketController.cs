@@ -1,26 +1,51 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SpeedyTools.Api.Contracts.Tickets.Requests;
-using SpeedyTools.Domain.Models.UserAggregate;
-using System.Security.Claims;
+using SpeedyTools.Application.Tickets.Commands;
+using SpeedyTools.Application.Tickets.Queries;
 
 namespace SpeedyTools.Api.Controllers
 {
     [Route("ticket")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class TicketController : BaseController
     {
 
-        [HttpPost("createTicket")]
-        public async Task<IActionResult> CreateTicket([FromBody] CreateTicketDto createTicketDto)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] CreateTicketDto createTicketDto)
         {
-            var currentUserId = ProcessGetUserId();
-            //createTicketDto.AppUserId = currentUserId.Match<IActionResult>()
+            var userId = UserManager.GetUserId(User);
+            if (userId == null) { return Unauthorized(); }
+            createTicketDto.AppUserId = Guid.Parse(userId);
             var command = createTicketDto.Map();
             var result = await Mediator.Send(command);
             return Ok(result);
+        }
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromBody] EditTicketDto editTicketDto)
+        {
+            var command = editTicketDto.Map();
+            var result = await Mediator.Send(command);
+            return ProcessUpdate(result);
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute]Guid id)
+        {
+            var query = new GetTicketQuery { Id = id };
+            var result = await Mediator.Send(query);
+            return ProcessGet(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await Mediator.Send(new GetTicketsQuery());
+            return ProcessGet(result);
+        }
+        [HttpPost("delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var result = await Mediator.Send(new DeleteTicketCommand { Id = id });
+            return ProcessDelete(result);
         }
     }
 }

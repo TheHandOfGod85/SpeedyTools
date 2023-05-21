@@ -2,7 +2,7 @@
 using SpeedyTools.Domain.Models.TicketAggregate;
 using SpeedyTools.Infrastructure;
 
-namespace SpeedyTools.Application.Tickets
+namespace SpeedyTools.Application.Tickets.Commands
 {
     public class CreateTicketCommand : IRequest<string>
     {

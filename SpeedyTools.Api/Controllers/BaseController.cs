@@ -11,10 +11,10 @@ namespace SpeedyTools.Api.Controllers
     [Route("api")]
     public class BaseController : Controller
     {
+        private UserManager<AppUser> _userManager;
         private IMediator _mediator;
-        private  UserManager<AppUser> _userManager;
-        
-        protected UserManager<AppUser> userManager =>
+
+        protected UserManager<AppUser> UserManager => 
             _userManager ??= HttpContext.RequestServices.GetService<UserManager<AppUser>>();
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices
        .GetService<IMediator>();
@@ -23,11 +23,13 @@ namespace SpeedyTools.Api.Controllers
         {
             return result ? NoContent() : NotFound();
         }
-        protected OneOf<Guid, ActionResult> ProcessGetUserId()
+        protected ActionResult ProcessGet<T>(T result)
         {
-            var currentUserId = Guid.Parse(_userManager.GetUserId(User));
-            if (currentUserId == null) { return Unauthorized(); }
-            return currentUserId;
+            return result is not null ? Ok(result) : NotFound();
+        }
+        protected ActionResult ProcessDelete(bool result)
+        {
+            return result ? NoContent() : NotFound();
         }
     }
 }

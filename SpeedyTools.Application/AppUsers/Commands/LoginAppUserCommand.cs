@@ -32,7 +32,7 @@ namespace SpeedyTools.Application.AppUsers.Commands
         {
             var appUser = await _userManager.FindByEmailAsync(request.Email);
             if (appUser == null) { return "Wrong"; }
-            var signInResult = await _signInManager.CheckPasswordSignInAsync(appUser, request.Password,false);
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(appUser, request.Password, false);
             if (signInResult.Succeeded)
             {
                 var token = _jwt.GenerateTokenString(appUser);

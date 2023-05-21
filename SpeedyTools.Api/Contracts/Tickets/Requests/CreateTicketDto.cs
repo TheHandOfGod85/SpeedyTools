@@ -1,4 +1,4 @@
-﻿using SpeedyTools.Application.Tickets;
+﻿using SpeedyTools.Application.Tickets.Commands;
 using System.ComponentModel.DataAnnotations;
 
 namespace SpeedyTools.Api.Contracts.Tickets.Requests

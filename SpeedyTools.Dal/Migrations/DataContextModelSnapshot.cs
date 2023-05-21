@@ -188,7 +188,7 @@ namespace SpeedyTools.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId1");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
                 });
 
             modelBuilder.Entity("SpeedyTools.Domain.Models.UserAggregate.AppUser", b =>
