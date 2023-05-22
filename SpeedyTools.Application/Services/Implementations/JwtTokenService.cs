@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SpeedyTools.Application.Options;
 using SpeedyTools.Application.Services.Interfaces;
@@ -16,11 +17,13 @@ namespace SpeedyTools.Application.Services.Implementations
     public class JwtTokenService : ITokenService
     {
         private readonly JwtSettings _jwtSettings;
+        private readonly UserManager<AppUser> _userManager;
         public JwtSecurityTokenHandler TokenHandler = new JwtSecurityTokenHandler();
 
-        public JwtTokenService(IOptions<JwtSettings> jwtOptions)
+        public JwtTokenService(IOptions<JwtSettings> jwtOptions, UserManager<AppUser> userManager)
         {
             _jwtSettings = jwtOptions.Value;
+            _userManager = userManager;
         }
 
 
@@ -31,6 +34,12 @@ namespace SpeedyTools.Application.Services.Implementations
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
+            var roles = _userManager.GetRolesAsync(user).Result;
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SigningKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var tokendescriptor = new SecurityTokenDescriptor

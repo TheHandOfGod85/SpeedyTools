@@ -8,9 +8,19 @@ namespace SpeedyTools.Infrastructure
 {
     public class SampleData
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public static async Task Initialize(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetService<DataContext>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+
+            // Seed Roles
+            if (!roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
+            {
+                 roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
+                 roleManager.CreateAsync(new IdentityRole("Engineer")).GetAwaiter().GetResult();
+            }
             // Seed User
             var user = new AppUser
             {
@@ -23,7 +33,7 @@ namespace SpeedyTools.Infrastructure
                 EmailConfirmed = true,
                 SecurityStamp = Guid.NewGuid().ToString("D")
             };
-            if (!context.Users.Any(u => u.UserName == user.UserName))
+            if (!userManager.Users.Any(u => u.UserName == user.UserName))
             {
                 var password = new PasswordHasher<AppUser>();
                 var hashed = password.HashPassword(user, "Pa$$0rd");
@@ -31,8 +41,10 @@ namespace SpeedyTools.Infrastructure
 
                 var userStore = new UserStore<AppUser>(context);
                 var result = userStore.CreateAsync(user);
-                context.SaveChangesAsync();
             }
+            // Assign Admin Role to User
+            userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+            
 
             // Seed ticket
             if (!context.Tickets.Any())
@@ -49,7 +61,7 @@ namespace SpeedyTools.Infrastructure
                 context.Tickets.Add(ticket);
                 context.SaveChanges();
             }
-                
+            await context.SaveChangesAsync();
         }
     }
 }

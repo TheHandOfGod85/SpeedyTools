@@ -31,5 +31,6 @@ namespace SpeedyTools.Api.Controllers
         {
             return result ? NoContent() : NotFound();
         }
+        
     }
 }

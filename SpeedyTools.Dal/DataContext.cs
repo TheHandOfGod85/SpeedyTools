@@ -23,6 +23,7 @@ namespace SpeedyTools.Infrastructure
 
             // example how to add a resource configuration
             //new AppUserConfiguration().Configure(builder.Entity<AppUser>());
+            new TicketConfiguration().Configure(builder.Entity<Ticket>());
         }
     }
 }

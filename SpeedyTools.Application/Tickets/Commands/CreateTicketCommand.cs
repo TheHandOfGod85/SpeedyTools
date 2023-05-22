@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Domain.Models.TicketAggregate;
 using SpeedyTools.Infrastructure;
 

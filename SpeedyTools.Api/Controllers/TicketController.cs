@@ -7,7 +7,7 @@ namespace SpeedyTools.Api.Controllers
 {
     [Route("ticket")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class TicketController : BaseController
     {
 
@@ -46,6 +46,14 @@ namespace SpeedyTools.Api.Controllers
         {
             var result = await Mediator.Send(new DeleteTicketCommand { Id = id });
             return ProcessDelete(result);
+        }
+        [HttpGet("userTickets")]
+        public async Task<IActionResult> GetUserTickets()
+        {
+            var userId = UserManager.GetUserId(User);
+            if (userId == null) { return Unauthorized(); }
+            var query = await Mediator.Send( new GetAppUserTicketsQuery { Id = Guid.Parse(userId) });
+            return ProcessGet(query);
         }
     }
 }

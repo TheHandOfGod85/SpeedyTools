@@ -18,14 +18,7 @@ namespace SpeedyTools.Api.Controllers
             if (result is null) { return BadRequest("Email already exists"); }
             return Ok(result);
         }
-        [HttpPut("edit/{id}")]
-        public async Task<IActionResult> EditAppUser([FromBody] EditAppUserDto editAppUserDto, Guid id)
-        {
-            var command = editAppUserDto.Map();
-            command.Id = id;
-            var result = await Mediator.Send(command);
-            return ProcessUpdate(result);
-        }
+       
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
@@ -35,12 +28,7 @@ namespace SpeedyTools.Api.Controllers
             if (result is null) { return Unauthorized("Please, confirm your email"); }
             return Ok(result);
         }
-        [HttpPost("createRole")]
-        public async Task<IActionResult> CreateRole(string roleName)
-        {
-            var result = await Mediator.Send(new CreateRoleCommand(roleName));
-            return Ok(result);
-        }
+        
         [HttpGet("verifyEmail")]
         public async Task<IActionResult> VerifyEmail(string token, string email)
         {
@@ -55,11 +43,17 @@ namespace SpeedyTools.Api.Controllers
             if (result is null) { return Unauthorized(); }
             return Ok(result);
         }
-        [HttpGet("getUsers")]
-        public async Task<IActionResult> GetUsers()
+        [Authorize]
+        [HttpPut("edit")]
+        public async Task<IActionResult> EditAppUser([FromBody] EditAppUserDto editAppUserDto)
         {
-            var result = await Mediator.Send(new GetUsersQuery());
-            return Ok(result);
+            var appUserId =  UserManager.GetUserId(User);
+            if (appUserId == null) { return Unauthorized(); }
+            var command = editAppUserDto.Map();
+            command.AppUserId = Guid.Parse(appUserId);
+            var result = await Mediator.Send(command);
+            return ProcessUpdate(result);
         }
+
     }
 }

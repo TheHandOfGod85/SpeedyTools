@@ -2,50 +2,46 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Application.Contracts.AppUserS.Responses;
-using SpeedyTools.Application.Contracts.Tickets.Responses;
 using SpeedyTools.Domain.Models.UserAggregate;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SpeedyTools.Infrastructure;
 
 namespace SpeedyTools.Application.AppUsers.Queries
 {
-    public class GetUsersQuery :IRequest<List<AppUserDto>>
+    public class GetUsersQuery : IRequest<List<AppUserDto>>
     {
     }
 
     public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, List<AppUserDto>>
     {
+        private readonly DataContext _dataContext;
         private readonly UserManager<AppUser> _userManager;
-        public GetUsersQueryHandler(UserManager<AppUser> userManager)
+        public GetUsersQueryHandler(DataContext dataContext, UserManager<AppUser> userManager)
         {
+            _dataContext = dataContext;
             _userManager = userManager;
         }
 
         public async Task<List<AppUserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            return await _userManager.Users
-                .Include(u => u.Tickets)
-                .AsNoTracking()
-                .Select(x => new AppUserDto
-                { 
-                    Email = x.Email,
-                    LastName = x.LastName,
-                    Name = x.Name,
-                    Shift = x.Shift,
-                    Tickets = x.Tickets.Select(t => new TicketDto // Map tickets to TicketDto
-                    {
-                        Id = t.Id,
-                        Title = t.Title,
-                        Created = t.Created,
-                        Closed = t.Closed,
-                        Description = t.Description,
-                        LastModified = t.LastModified
-                    }).ToList()
-                })
-                .ToListAsync();
+            var users = await _dataContext.AppUsers.ToListAsync(); 
+            var usersWithRoles = new List<(AppUser User, List<string> Roles)>(); 
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                usersWithRoles.Add((user, roles.ToList()));
+            }
+
+            var result = usersWithRoles.Select(x => new AppUserDto
+            {
+                Email = x.User.Email,
+                LastName = x.User.LastName,
+                Name = x.User.Name,
+                Shift = x.User.Shift,
+                Roles = x.Roles 
+            }).ToList();
+
+            return result;
         }
     }
 }
