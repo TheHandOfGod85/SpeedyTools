@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SpeedyTools.Api.Contracts.Tickets.Requests;
 using SpeedyTools.Application.Tickets.Commands;
 using SpeedyTools.Application.Tickets.Queries;
@@ -35,12 +36,7 @@ namespace SpeedyTools.Api.Controllers
             var result = await Mediator.Send(query);
             return ProcessGet(result);
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var result = await Mediator.Send(new GetTicketsQuery());
-            return ProcessGet(result);
-        }
+        
         [HttpPost("delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {

@@ -30,7 +30,7 @@ namespace SpeedyTools.Api.Contracts.AppUsers.Requestes
         {
             return new RegisterAppUserCommand
             {
-                UserName = Email,
+                Email = Email,
                 Password = Password,
                 Name = Name,
                 LastName = LastName,

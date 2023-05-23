@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SpeedyTools.Api.Contracts.AppUsers.Requestes;
 using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.Application.AppUsers.Queries;
+using SpeedyTools.Application.Contracts.AppUsers.Requests;
+using SpeedyTools.Application.Tickets.Queries;
 
 namespace SpeedyTools.Api.Controllers
 {
@@ -25,9 +27,18 @@ namespace SpeedyTools.Api.Controllers
             var result = await Mediator.Send(new GetUsersQuery());
             return Ok(result);
         }
-
-        // Todo: Create a method to send an email that invites for registration.
-        // The email will have a registration page, the admin that sends the email
-        // will assign the role to the new user
+        [HttpPost("sendRegistration")]
+        public async Task<IActionResult> SendRegistration(SendRegistrationDto sendRegistrationDto )
+        {
+            var command = sendRegistrationDto.Map();
+            var result = await Mediator.Send(command);
+            return result ? Ok() : BadRequest("Email already exists");
+        }
+        [HttpGet("getAllTickets")]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            var result = await Mediator.Send(new GetTicketsQuery());
+            return ProcessGet(result);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.Domain.Models.UserAggregate;
 
@@ -8,7 +9,7 @@ namespace SpeedyTools.Application.AppUsers.Commands
 {
     public class RegisterAppUserCommand : IRequest<string>
     {
-        public string UserName { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
@@ -44,34 +45,37 @@ namespace SpeedyTools.Application.AppUsers.Commands
 
         public async Task<string> Handle(RegisterAppUserCommand request, CancellationToken cancellationToken)
         {
-            if (_userManager.Users.Any(x => x.Email == request.UserName))
-            {
-                return null;
-            }
-            AppUser appUser = CreateUser(request);
-            var result = await _userManager.CreateAsync(appUser, request.Password);
+            var userInvited = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
+            if (userInvited is null) { return null; }
+            string passwordHashed = HashPassword(request, userInvited);
+            CompleteRegistration(request, userInvited, passwordHashed);
+            var result = await _userManager.UpdateAsync(userInvited);
             if (!result.Succeeded) { throw new Exception(message: $"{result.Errors.FirstOrDefault().Description}"); }
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-            var encodedToken =_encoderService.Encode(token);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(userInvited);
+            var encodedToken = _encoderService.Encode(token);
             var origin = _contextAccessor.GetOrigin();
-            var verifyUrl = $"{origin}/user/verifyEmail?token={encodedToken}&email={appUser.UserName}";
+            var verifyUrl = $"{origin}/user/verifyEmail?token={encodedToken}&email={userInvited.Email}";
             var pathToFile = _rootPathBuilder.GetWebRootPath("Templates", "EmailConfirmationTemplate.html");
-            List<string> replacements = new List<string> { request.UserName, verifyUrl, verifyUrl };
+            List<string> replacements = new List<string> { request.Email, verifyUrl, verifyUrl };
             string htmlBodyRead = _htmlProcessor.ProcessHtml(pathToFile, replacements);
-            await _emailSender.SendEmailAsync(appUser.UserName, "Please verify email", htmlBodyRead);
+            await _emailSender.SendEmailAsync(userInvited.Email, "Please verify email", htmlBodyRead);
             return encodedToken.ToString();
         }
 
-        private static AppUser CreateUser(RegisterAppUserCommand request)
+        private static void CompleteRegistration(RegisterAppUserCommand request, AppUser? userInvited, string passwordHashed)
         {
-            return new AppUser
-            {
-                Email = request.UserName,
-                UserName = request.UserName,
-                Name = request.Name,
-                LastName = request.LastName,
-                Shift = request.Shift,
-            };
+            userInvited.Email = request.Email;
+            userInvited.Name = request.Name;
+            userInvited.LastName = request.LastName;
+            userInvited.Shift = request.Shift;
+            userInvited.PasswordHash = passwordHashed;
+        }
+
+        private static string HashPassword(RegisterAppUserCommand request, AppUser? userInvited)
+        {
+            var password = new PasswordHasher<AppUser>();
+            var hashed = password.HashPassword(userInvited, request.Password);
+            return hashed;
         }
     }
 }

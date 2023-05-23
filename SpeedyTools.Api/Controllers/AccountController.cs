@@ -15,7 +15,7 @@ namespace SpeedyTools.Api.Controllers
         {
             var command = createAppUserDto.Map();
             var result = await Mediator.Send(command);
-            if (result is null) { return BadRequest("Email already exists"); }
+            if (result is null) { return BadRequest("Email was not registered"); }
             return Ok(result);
         }
        

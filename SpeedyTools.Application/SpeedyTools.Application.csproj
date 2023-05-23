@@ -17,9 +17,5 @@
     <ProjectReference Include="..\SpeedyTools.Dal\SpeedyTools.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\AppUsers\Requests\" />
-  </ItemGroup>
-
 
 </Project>
