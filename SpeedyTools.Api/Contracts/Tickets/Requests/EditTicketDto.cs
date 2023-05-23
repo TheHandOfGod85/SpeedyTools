@@ -8,10 +8,17 @@ namespace SpeedyTools.Api.Contracts.Tickets.Requests
         public Guid Id { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
+        public Guid AppUserId { get; set; }
 
         public override EditTicketCommand Map()
         {
-            return new EditTicketCommand { Id = Id, Title = Title, Description = Description };
+            return new EditTicketCommand 
+            { 
+                Id = Id, 
+                Title = Title, 
+                Description = Description,
+                AppUserId = AppUserId 
+            };
         }
     }
 }

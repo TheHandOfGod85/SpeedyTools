@@ -11,13 +11,12 @@ namespace SpeedyTools.Api.Controllers
     [Route("api")]
     public class BaseController : Controller
     {
-        private UserManager<AppUser> _userManager;
         private IMediator _mediator;
 
-        protected UserManager<AppUser> UserManager => 
-            _userManager ??= HttpContext.RequestServices.GetService<UserManager<AppUser>>();
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices
        .GetService<IMediator>();
+
+        protected Guid UserId => (Guid)HttpContext.Items["UserId"];
 
         protected ActionResult ProcessUpdate(bool result)
         {

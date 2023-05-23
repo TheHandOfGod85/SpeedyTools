@@ -6,6 +6,7 @@ namespace SpeedyTools.Application.Tickets.Commands
     public class DeleteTicketCommand : IRequest<bool>
     {
         public required Guid Id { get; set; }
+        public required Guid AppUserId { get; set; }
     }
 
     public class DeleteTicketCommandHandler : IRequestHandler<DeleteTicketCommand, bool>
@@ -19,7 +20,9 @@ namespace SpeedyTools.Application.Tickets.Commands
 
         public async Task<bool> Handle(DeleteTicketCommand request, CancellationToken cancellationToken)
         {
-            var ticket = _dataContext.Tickets.FirstOrDefault(x => x.Id == request.Id);
+            var ticket = _dataContext.Tickets
+                .Where(x => x.AppUserId == request.AppUserId)
+                .FirstOrDefault(x => x.Id == request.Id);
             if (ticket == null) { return false; }
             _dataContext.Tickets.Remove(ticket);
             return await _dataContext.SaveChangesAsync() > 0;

@@ -37,7 +37,7 @@ namespace SpeedyTools.Api.Controllers
         [HttpGet("getAllTickets")]
         public async Task<IActionResult> GetAllTickets()
         {
-            var result = await Mediator.Send(new GetTicketsQuery());
+            var result = await Mediator.Send(new GetTicketsByAdminQuery());
             return ProcessGet(result);
         }
     }

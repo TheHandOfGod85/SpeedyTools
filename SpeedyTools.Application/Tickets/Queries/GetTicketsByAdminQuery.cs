@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace SpeedyTools.Application.Tickets.Queries
 {
-    public class GetTicketsQuery : IRequest<List<TicketDto>>
+    public class GetTicketsByAdminQuery : IRequest<List<TicketDto>>
     {
     }
 
-    public class GetTicketsQueryHandler : IRequestHandler<GetTicketsQuery, List<TicketDto>>
+    public class GetTicketsQueryHandler : IRequestHandler<GetTicketsByAdminQuery, List<TicketDto>>
     {
         private readonly DataContext _dataContext;
         public GetTicketsQueryHandler(DataContext dataContext)
@@ -22,10 +22,9 @@ namespace SpeedyTools.Application.Tickets.Queries
             _dataContext = dataContext;
         }
 
-        public async Task<List<TicketDto>> Handle(GetTicketsQuery request, CancellationToken cancellationToken)
+        public async Task<List<TicketDto>> Handle(GetTicketsByAdminQuery request, CancellationToken cancellationToken)
         {
             return await _dataContext.Tickets
-                .AsNoTracking()
                 .Select(x => new TicketDto
                 {
                     Title = x.Title,

@@ -5,12 +5,12 @@ using SpeedyTools.Infrastructure;
 
 namespace SpeedyTools.Application.Tickets.Queries
 {
-    public class GetAppUserTicketsQuery : IRequest<List<TicketDto>>
+    public class GetTicketsByAppUserQuery : IRequest<List<TicketDto>>
     {
         public required Guid Id { get; set; }
     }
 
-    public class GetAppUserTicketsQueryHandler : IRequestHandler<GetAppUserTicketsQuery, List<TicketDto>>
+    public class GetAppUserTicketsQueryHandler : IRequestHandler<GetTicketsByAppUserQuery, List<TicketDto>>
     {
         protected readonly DataContext _dataContext;
 
@@ -19,7 +19,7 @@ namespace SpeedyTools.Application.Tickets.Queries
             _dataContext = dataContext;
         }
 
-        public async Task<List<TicketDto>> Handle(GetAppUserTicketsQuery request, CancellationToken cancellationToken)
+        public async Task<List<TicketDto>> Handle(GetTicketsByAppUserQuery request, CancellationToken cancellationToken)
         {
             return await _dataContext.Tickets
                 .Where(x => x.AppUserId == request.Id)

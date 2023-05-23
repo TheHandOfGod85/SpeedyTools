@@ -8,6 +8,7 @@ namespace SpeedyTools.Application.Tickets.Commands
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public Guid AppUserId { get; set; }
     }
 
     public class EditTicketCommandHandler : IRequestHandler<EditTicketCommand, bool>
@@ -20,7 +21,9 @@ namespace SpeedyTools.Application.Tickets.Commands
 
         public async Task<bool> Handle(EditTicketCommand request, CancellationToken cancellationToken)
         {
-            var ticket = _dataContext.Tickets.FirstOrDefault(x => x.Id == request.Id);
+            var ticket = _dataContext.Tickets
+                .Where(x => x.AppUserId == request.AppUserId)
+                .FirstOrDefault(x => x.Id == request.Id);
             if (ticket == null) { return false; }
             ticket.Title = request.Title;
             ticket.Description = request.Description;
