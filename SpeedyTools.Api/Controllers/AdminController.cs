@@ -9,8 +9,8 @@ using SpeedyTools.Application.Tickets.Queries;
 namespace SpeedyTools.Api.Controllers
 {
     [ApiController]
-    [Route("admin")]
-    [Authorize(Roles = "Admin")]
+    //[Route("admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : BaseController
     {
         

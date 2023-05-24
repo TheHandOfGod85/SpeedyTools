@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpeedyTools.Api.Contracts.AppUsers.Requestes;
+using SpeedyTools.Api.Filters;
 using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.Application.AppUsers.Queries;
 
@@ -45,12 +46,11 @@ namespace SpeedyTools.Api.Controllers
         }
         [Authorize]
         [HttpPut("edit")]
+        [UserId]
         public async Task<IActionResult> EditAppUser([FromBody] EditAppUserDto editAppUserDto)
         {
-            var appUserId =  UserManager.GetUserId(User);
-            if (appUserId == null) { return Unauthorized(); }
             var command = editAppUserDto.Map();
-            command.AppUserId = Guid.Parse(appUserId);
+            command.AppUserId = UserId;
             var result = await Mediator.Send(command);
             return ProcessUpdate(result);
         }

@@ -25,6 +25,13 @@ namespace SpeedyTools.Api.Extensions
             services.AddScoped<IWebRootPathBuilder, WebRootPathBuilderService>();
             services.AddScoped<IHtmlProcessor, HtmlProcessor>();
             services.AddTransient<SampleData>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:4200");
+                });
+            });
             
             return services;
         }
