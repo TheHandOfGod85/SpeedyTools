@@ -4,6 +4,7 @@ using SpeedyTools.Api.Contracts.AppUsers.Requestes;
 using SpeedyTools.Api.Filters;
 using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.Application.AppUsers.Queries;
+using System.Text.Json;
 
 namespace SpeedyTools.Api.Controllers
 {
@@ -25,9 +26,8 @@ namespace SpeedyTools.Api.Controllers
         {
             var command = loginDto.Map();
             var result = await Mediator.Send(command);
-            if (result is "Wrong") { return BadRequest("Wrong email or password"); }
-            if (result is null) { return Unauthorized("Please, confirm your email"); }
-            return Ok(result);
+            if (result is null) { return BadRequest("Wrong email or password, or confirm your email"); }
+            return Ok(JsonSerializer.Serialize(result));
         }
         
         [HttpGet("verifyEmail")]

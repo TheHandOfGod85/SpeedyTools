@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TicketsComponent } from './components/tickets/tickets.component';
@@ -36,6 +37,7 @@ import { FormsModule } from '@angular/forms';
     MatCardModule,
     HttpClientModule,
     FormsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

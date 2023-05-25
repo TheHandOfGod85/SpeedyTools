@@ -31,7 +31,8 @@ namespace SpeedyTools.Application.AppUsers.Commands
         public async Task<string> Handle(LoginAppUserCommand request, CancellationToken cancellationToken)
         {
             var appUser = await _userManager.FindByEmailAsync(request.Email);
-            if (appUser == null) { return "Wrong"; }
+            if (appUser == null) { return null; }
+            if (!appUser.EmailConfirmed) { return null; }
             var signInResult = await _signInManager.CheckPasswordSignInAsync(appUser, request.Password, false);
             if (signInResult.Succeeded)
             {
