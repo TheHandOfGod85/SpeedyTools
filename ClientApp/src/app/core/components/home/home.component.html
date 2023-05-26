@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row justify-content-center mt-2">
+    <h1>Home Page</h1>
+    <p>Welcome [NAME]</p>
+    <ul>
+      <li *ngIf="!authService.isLoggedIn()">
+        <a routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="authService.isLoggedIn()"><a>Admin</a></li>
+      <li *ngIf="authService.isLoggedIn()">
+        <a
+          (click)="authService.logout()"
+          class="text-decoration-underline"
+          style="cursor: pointer"
+          >Logout</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>

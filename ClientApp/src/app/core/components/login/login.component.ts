@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +9,6 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  isLoginMode = true;
   isLoading = false;
   errors = '';
 
@@ -22,14 +21,12 @@ export class LoginComponent {
     const email = form.value.email;
     const password = form.value.password;
     this.isLoading = true;
-    if (this.isLoginMode) {
-    } else {
-    }
     this.authService.login(email, password).subscribe({
       next: (token) => {
         console.log(token);
         this.isLoading = false;
         this.errors = '';
+        this.router.navigate(['/']);
       },
       error: (error) => {
         console.log(error.error);

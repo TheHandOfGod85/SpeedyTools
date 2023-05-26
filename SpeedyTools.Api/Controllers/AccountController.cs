@@ -26,8 +26,8 @@ namespace SpeedyTools.Api.Controllers
         {
             var command = loginDto.Map();
             var result = await Mediator.Send(command);
-            if (result is null) { return BadRequest("Wrong email or password, or confirm your email"); }
-            return Ok(JsonSerializer.Serialize(result));
+            if (result is null) { return BadRequest("Invalid email and/or password"); }
+            return Ok(result);
         }
         
         [HttpGet("verifyEmail")]

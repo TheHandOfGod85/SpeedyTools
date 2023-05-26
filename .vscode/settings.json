@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "**/.angular": true,
+    "**/.NCrunch_SpeedyTools": true,
+    "**/.vs": true,
+    "**/.vscode": true,
+    "**/bin": true,
+    "**/obj": true
+  }
+}

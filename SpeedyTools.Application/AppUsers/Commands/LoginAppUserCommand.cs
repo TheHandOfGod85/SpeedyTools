@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using SpeedyTools.Application.Services.Interfaces;
 using SpeedyTools.Domain.Models.UserAggregate;
+using System.Text.Json;
 
 namespace SpeedyTools.Application.AppUsers.Commands
 {
@@ -37,7 +38,7 @@ namespace SpeedyTools.Application.AppUsers.Commands
             if (signInResult.Succeeded)
             {
                 var token = _jwt.GenerateTokenString(appUser);
-                return token;
+                return JsonSerializer.Serialize(token);
             }
             return null;
         }

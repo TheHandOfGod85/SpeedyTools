@@ -7,23 +7,17 @@ import { MatCardModule } from '@angular/material/card';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TicketsComponent } from './components/tickets/tickets.component';
+import { TicketsComponent } from './tickets/tickets.component';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
-import { AuthService } from './services/auth.service';
+import { LoginComponent } from './core/components/login/login.component';
+import { HomeComponent } from './core/components/home/home.component';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'shared/shared.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    TicketsComponent,
-    LoginComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, TicketsComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
@@ -31,15 +25,11 @@ import { FormsModule } from '@angular/forms';
       { path: 'login', component: LoginComponent },
     ]),
     BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
     HttpClientModule,
-    FormsModule,
-    MatProgressSpinnerModule,
+    SharedModule,
+    CoreModule,
   ],
-  providers: [AuthService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
