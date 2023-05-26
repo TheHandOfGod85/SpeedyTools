@@ -32,4 +32,10 @@ export class AuthService {
     let isTokenExpired = this.jwtHelper.isTokenExpired();
     return !isTokenExpired;
   }
+  get currentUser() {
+    let token = localStorage.getItem('token');
+    if (!token) return null;
+    let decodedToken = this.jwtHelper.decodeToken(token);
+    return decodedToken;
+  }
 }

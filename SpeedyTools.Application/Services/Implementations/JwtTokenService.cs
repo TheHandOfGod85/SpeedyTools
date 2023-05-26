@@ -33,6 +33,7 @@ namespace SpeedyTools.Application.Services.Implementations
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
             };
             var roles = _userManager.GetRolesAsync(user).Result;
             foreach (var role in roles)

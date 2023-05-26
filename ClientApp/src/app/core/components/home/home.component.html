@@ -1,12 +1,20 @@
 <div class="container">
   <div class="row justify-content-center mt-2">
     <h1>Home Page</h1>
-    <p>Welcome [NAME]</p>
+    <p *ngIf="authService.isLoggedIn()">
+      Welcome {{ authService.currentUser.unique_name }}
+    </p>
     <ul>
       <li *ngIf="!authService.isLoggedIn()">
         <a routerLink="/login">Login</a>
       </li>
-      <li *ngIf="authService.isLoggedIn()"><a>Admin</a></li>
+      <li
+        *ngIf="
+          authService.isLoggedIn() && authService.currentUser.role === 'Admin'
+        "
+      >
+        <a>Admin</a>
+      </li>
       <li *ngIf="authService.isLoggedIn()">
         <a
           (click)="authService.logout()"
