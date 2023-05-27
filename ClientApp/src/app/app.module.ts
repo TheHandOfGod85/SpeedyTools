@@ -15,9 +15,10 @@ import { HomeComponent } from './core/components/home/home.component';
 import { SharedModule } from 'shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { appRoutes } from './routes';
+import { TicketsModule } from './tickets/tickets.module';
 
 @NgModule({
-  declarations: [AppComponent, TicketsComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
@@ -25,6 +26,7 @@ import { appRoutes } from './routes';
     HttpClientModule,
     SharedModule,
     CoreModule,
+    TicketsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
