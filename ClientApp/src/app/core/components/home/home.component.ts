@@ -11,4 +11,7 @@ export class HomeComponent {
   constructor(authService: AuthService) {
     this.authService = authService;
   }
+  get user() {
+    return this.authService.currentUser;
+  }
 }

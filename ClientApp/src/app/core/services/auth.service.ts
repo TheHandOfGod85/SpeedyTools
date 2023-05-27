@@ -8,6 +8,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
   private loginUrl = 'http://localhost:7197/user/login';
+  private readonly TOKEN_NAME = 'token';
+  get token() {
+    return localStorage.getItem(this.TOKEN_NAME);
+  }
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
   login(email: string, password: string) {
     return this.http
@@ -19,14 +23,14 @@ export class AuthService {
         map((response) => {
           let result = response;
           if (result) {
-            localStorage.setItem('token', result);
+            localStorage.setItem(this.TOKEN_NAME, result);
           }
         })
       );
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem(this.TOKEN_NAME);
   }
 
   isLoggedIn() {
@@ -34,9 +38,8 @@ export class AuthService {
     return !isTokenExpired;
   }
   get currentUser() {
-    let token = localStorage.getItem('token');
-    if (!token) return null;
-    let decodedToken = this.jwtHelper.decodeToken(token);
+    if (!this.token) return null;
+    let decodedToken = this.jwtHelper.decodeToken(this.token);
     return decodedToken;
   }
 }
