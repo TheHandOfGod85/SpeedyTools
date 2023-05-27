@@ -14,4 +14,7 @@ export class TicketsService {
   getAll() {
     return this.httpRequests.get<Ticket[]>(this.url + 'userTickets');
   }
+  create(ticket: any) {
+    return this.httpRequests.post<string>(this.url + 'create', ticket);
+  }
 }

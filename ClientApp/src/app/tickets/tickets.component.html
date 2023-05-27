@@ -1,13 +1,63 @@
-<div class="container mt-5">
-  <!-- <input
-    (keyup.enter)="createTicket(title)"
-    #title
-    type="text"
-    class="form-control mb-1"
-  /> -->
-  <ul class="list-group">
-    <li *ngFor="let ticket of tickets" class="list-group-item">
-      {{ ticket.title }}
-    </li>
-  </ul>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <form #ticketForm="ngForm" (ngSubmit)="createTicket(ticketForm)">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            required
+            ngModel
+            name="title"
+            #title="ngModel"
+          />
+        </div>
+        <div class="form-group">
+          <label for="content">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            required
+            ngModel
+            name="description"
+            #description="ngModel"
+          ></textarea>
+        </div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!ticketForm.valid"
+        >
+          Send Ticket
+        </button>
+      </form>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <button class="btn btn-primary" (click)="getAllTickets()">
+        Fetch Tickets
+      </button>
+      |
+      <!-- <button
+        class="btn btn-danger"
+        [disabled]="loadedPosts.length < 1"
+        (click)="onClearPosts()"
+      >
+        Clear Posts
+      </button> -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <ul class="list-group">
+        <li *ngFor="let ticket of tickets" class="list-group-item">
+          {{ ticket.title }}
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

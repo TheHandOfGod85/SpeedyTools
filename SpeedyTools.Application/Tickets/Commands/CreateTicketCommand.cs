@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Domain.Models.TicketAggregate;
 using SpeedyTools.Infrastructure;
+using System.Text.Json;
 
 namespace SpeedyTools.Application.Tickets.Commands
 {
@@ -39,7 +40,7 @@ namespace SpeedyTools.Application.Tickets.Commands
             var ticket = request.CreateTicket();
             _dataContext.Tickets.Add(ticket);
             await _dataContext.SaveChangesAsync();
-            return ticket.Id.ToString();
+            return JsonSerializer.Serialize(ticket.Id.ToString());
         }
     }
 }

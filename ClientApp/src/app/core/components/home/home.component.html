@@ -10,6 +10,9 @@
         <a>Admin</a>
       </li>
       <li *ngIf="authService.isLoggedIn()">
+        <a routerLink="/tickets">Tickets</a>
+      </li>
+      <li *ngIf="authService.isLoggedIn()">
         <a
           (click)="authService.logout()"
           class="text-decoration-underline"

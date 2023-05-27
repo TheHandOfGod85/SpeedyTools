@@ -5,8 +5,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class HttpRequestsService {
-  // token = localStorage.getItem('token');
-  // headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
   constructor(private http: HttpClient) {}
   public requests = {
     get: <T>(url: string) => this.http.get<T>(url),
