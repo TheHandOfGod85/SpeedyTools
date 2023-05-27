@@ -12,18 +12,15 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './core/components/login/login.component';
 import { HomeComponent } from './core/components/home/home.component';
-import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'shared/shared.module';
 import { CoreModule } from './core/core.module';
+import { appRoutes } from './routes';
 
 @NgModule({
   declarations: [AppComponent, TicketsComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      { path: 'login', component: LoginComponent },
-    ]),
+    RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
