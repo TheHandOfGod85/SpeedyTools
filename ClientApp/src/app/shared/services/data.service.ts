@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { AppError } from 'shared/errors/app-error';
 import { BadInput } from 'shared/errors/bad-input-error';
 import { NotFoundError } from 'shared/errors/not-found-error';
@@ -10,30 +10,34 @@ import { UnauthorizedError } from 'shared/errors/unauthorized-error';
 @Injectable({
   providedIn: 'root',
 })
-export abstract class DataService {
+export abstract class DataService<T> {
   protected abstract url: string;
 
   constructor(private http: HttpClient) {}
-  getAll(endPoint?: string): any {
+  getAll(endPoint?: string): Observable<T[]> {
     return this.http
-      .get(this.url + endPoint)
+      .get<T[]>(this.url + endPoint)
       .pipe(catchError(this.handleError));
   }
-  create(resource: any, endPoint?: string): any {
+  create(resource: T, endPoint?: string): Observable<T> {
     return this.http
-      .post(this.url + endPoint, resource)
+      .post<T>(this.url + endPoint, resource)
       .pipe(catchError(this.handleError));
   }
-  update(resource: any, id?: string): any {
+  update(resource: T, id?: string): Observable<T> {
     return this.http
-      .put(this.url + id, resource)
+      .put<T>(this.url + id, resource)
       .pipe(catchError(this.handleError));
   }
-  delete(id?: string): any {
-    return this.http.delete(this.url + id).pipe(catchError(this.handleError));
+  delete(id?: string): Observable<T> {
+    return this.http
+      .delete<T>(this.url + id)
+      .pipe(catchError(this.handleError));
   }
-  get(id?: string): any {
-    return this.http.delete(this.url + id).pipe(catchError(this.handleError));
+  get(id?: string): Observable<T> {
+    return this.http
+      .delete<T>(this.url + id)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

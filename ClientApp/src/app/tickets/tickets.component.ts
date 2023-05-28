@@ -26,8 +26,8 @@ export class TicketsComponent implements OnInit {
   }
   createTicket(form: NgForm) {
     this.ticketService.create(form.value, 'create').subscribe({
-      next: (ticketId: string) => {
-        this.ticketId = ticketId;
+      next: (ticket: Ticket) => {
+        this.ticketId = ticket.id;
       },
     });
     form.reset();
