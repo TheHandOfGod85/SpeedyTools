@@ -3,18 +3,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
-import { DataService } from 'shared/services/data.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptorProvider } from 'shared/interceptors/auth.interceptor';
 import { AppErrorProvider } from './errors/app-error-handler';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [],
+  declarations: [NotFoundComponent],
   imports: [
     HttpClientModule,
     CommonModule,
     FormsModule,
     MatButtonModule,
+    RouterModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
