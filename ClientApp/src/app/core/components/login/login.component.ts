@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +29,7 @@ export class LoginComponent {
         this.errors = '';
         this.router.navigate(['/']);
       },
-      error: (error) => {
-        console.log(error.error);
+      error: (error: HttpErrorResponse) => {
         this.isLoading = false;
         this.errors = error.error;
       },

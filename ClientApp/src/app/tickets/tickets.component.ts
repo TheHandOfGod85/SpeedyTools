@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./tickets.component.css'],
 })
 export class TicketsComponent implements OnInit {
-  tickets?: Ticket[];
+  tickets: Ticket[] = [];
   ticketId = '';
   constructor(private ticketService: TicketsService) {}
 
@@ -18,14 +18,17 @@ export class TicketsComponent implements OnInit {
   }
 
   getAllTickets() {
-    this.ticketService.getAll().subscribe((data) => {
-      this.tickets = [...data];
+    this.ticketService.getAll('userTickets').subscribe({
+      next: (tickets: Ticket[]) => {
+        this.tickets = tickets;
+      },
     });
   }
   createTicket(form: NgForm) {
-    this.ticketService.create(form.value).subscribe((data) => {
-      this.ticketId = data;
-      console.log(this.ticketId);
+    this.ticketService.create(form.value, 'create').subscribe({
+      next: (ticketId: string) => {
+        this.ticketId = ticketId;
+      },
     });
     form.reset();
   }
