@@ -1,0 +1,10 @@
+.demo-table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+}
+.demo-table-cell {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}

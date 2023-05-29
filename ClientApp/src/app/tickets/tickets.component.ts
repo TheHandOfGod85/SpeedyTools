@@ -5,16 +5,17 @@ import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-tickets',
-  templateUrl: './tickets.component.html',
-  styleUrls: ['./tickets.component.css'],
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
 })
 export class TicketsComponent implements OnInit {
   tickets: Ticket[] = [];
   ticketId = '';
+  displayedColumns: string[] = ['created', 'title', 'description'];
   constructor(private ticketService: TicketsService) {}
 
   ngOnInit() {
-    // this.getAllTickets();
+    this.getAllTickets();
   }
 
   getAllTickets() {
