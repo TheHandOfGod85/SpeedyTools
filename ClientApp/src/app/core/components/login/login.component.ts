@@ -11,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent {
   isLoading = false;
-  errors = '';
+  errors? = '';
 
   constructor(private router: Router, private authService: AuthService) {}
 
@@ -27,11 +27,16 @@ export class LoginComponent {
         console.log(token);
         this.isLoading = false;
         this.errors = '';
-        this.router.navigate(['/']);
+        this.router.navigateByUrl('/');
       },
       error: (error: HttpErrorResponse) => {
-        this.isLoading = false;
-        this.errors = error.error;
+        if (error.status === 400) {
+          this.errors = error.error;
+          this.isLoading = false;
+        } else {
+          this.isLoading = false;
+          throw error;
+        }
       },
     });
     form.reset();

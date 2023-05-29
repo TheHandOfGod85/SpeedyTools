@@ -8,10 +8,12 @@ import { AuthInterceptorProvider } from 'shared/interceptors/auth.interceptor';
 import { AppErrorProvider } from './errors/app-error-handler';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [NotFoundComponent],
   imports: [
+    MatSnackBarModule,
     HttpClientModule,
     CommonModule,
     FormsModule,
