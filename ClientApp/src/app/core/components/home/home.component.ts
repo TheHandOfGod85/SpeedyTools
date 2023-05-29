@@ -26,7 +26,7 @@ export class HomeComponent {
         console.log(token);
         this.isLoading = false;
         this.errors = '';
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/tickets');
       },
       error: (error: HttpErrorResponse) => {
         if (error.status === 400) {
