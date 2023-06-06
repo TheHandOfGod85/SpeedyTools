@@ -1,0 +1,15 @@
+.mat-menu-panel {
+  right: 0 !important;
+}
+.title {
+  flex-grow: 1;
+}
+
+.menu-wrapper {
+  position: relative;
+}
+
+.menu-position {
+  position: absolute;
+  right: 0;
+}

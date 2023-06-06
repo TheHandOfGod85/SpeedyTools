@@ -9,19 +9,29 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { FooterComponent } from './components/footer/footer.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-  declarations: [HomeComponent, FooterComponent],
+  declarations: [HomeComponent, FooterComponent, NavbarComponent],
   imports: [
-    RouterModule,
+    RouterModule.forChild([]),
     SharedModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatMenuModule,
   ],
   providers: [AuthService],
-  exports: [HomeComponent],
+  exports: [HomeComponent, NavbarComponent],
 })
 export class CoreModule {}

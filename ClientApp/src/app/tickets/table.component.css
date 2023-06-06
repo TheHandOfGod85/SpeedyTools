@@ -8,3 +8,7 @@
   text-align: left;
   padding: 8px;
 }
+
+mat-form-field {
+  width: 100%;
+}

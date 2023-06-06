@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
@@ -12,7 +13,11 @@ export class AuthService {
   get token() {
     return localStorage.getItem(this.TOKEN_NAME);
   }
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
+  constructor(
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService,
+    private router: Router
+  ) {}
   login(email: string, password: string) {
     return this.http
       .post<string>(this.loginUrl, {
@@ -31,6 +36,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem(this.TOKEN_NAME);
+    this.router.navigateByUrl('/');
   }
 
   isLoggedIn() {
