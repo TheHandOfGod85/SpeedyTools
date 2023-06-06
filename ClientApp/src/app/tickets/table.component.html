@@ -1,12 +1,30 @@
-<!-- <div class="demo-button-container">
-  <button mat-raised-button (click)="createTicket()" class="demo-button">
-    Add data
-  </button>
-</div> -->
+<div class="container">
+  <div class="row mt-5">
+    <button
+      mat-raised-button
+      type="button"
+      color="primary"
+      routerLink="/create"
+      style="width: 110px; height: 40px"
+    >
+      Add
+    </button>
+    <div class="row mt-2">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input />
+      </mat-form-field>
+    </div>
+  </div>
+</div>
 
 <div class="container">
-  <div class="row col-12 mt-5 text-center">
-    <table mat-table [dataSource]="tickets" class="mat-elevation-z8 demo-table">
+  <div class="row col-12 mt-2 text-center">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8 demo-table"
+    >
       <<ng-container matColumnDef="created">
         <th mat-header-cell *matHeaderCellDef class="demo-table-cell">
           Created

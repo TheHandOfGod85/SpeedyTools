@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TicketsService } from './tickets.service';
 import { Ticket } from 'shared/models/Ticket';
-import { NgForm } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-tickets',
@@ -9,9 +11,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./table.component.css'],
 })
 export class TicketsComponent implements OnInit {
-  tickets: Ticket[] = [];
-  ticketId = '';
   displayedColumns: string[] = ['created', 'title', 'description'];
+  dataSource!: MatTableDataSource<Ticket>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   constructor(private ticketService: TicketsService) {}
 
   ngOnInit() {
@@ -21,16 +24,22 @@ export class TicketsComponent implements OnInit {
   getAllTickets() {
     this.ticketService.getAll('userTickets').subscribe({
       next: (tickets: Ticket[]) => {
-        this.tickets = tickets;
+        this.dataSource = new MatTableDataSource(tickets);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      },
+      error: (err: any) => {
+        console.log(err);
       },
     });
   }
-  createTicket(form: NgForm) {
-    this.ticketService.create(form.value, 'create').subscribe({
-      next: (ticket: Ticket) => {
-        this.ticketId = ticket.id;
-      },
-    });
-    form.reset();
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
