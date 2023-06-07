@@ -1,6 +1,11 @@
 <body>
-  <main>
+  <div class="app-container">
     <app-navbar *ngIf="authService.isLoggedIn()"></app-navbar>
-    <router-outlet> </router-outlet>
-  </main>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="footer">
+      <app-footer></app-footer>
+    </div>
+  </div>
 </body>

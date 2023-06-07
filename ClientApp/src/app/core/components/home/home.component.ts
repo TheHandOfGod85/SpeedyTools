@@ -13,9 +13,8 @@ export class HomeComponent {
   isLoading = false;
   errors: string[] = [];
   loginForm: FormGroup;
-  token = localStorage.getItem("token")
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private _fb: FormBuilder
   ) {

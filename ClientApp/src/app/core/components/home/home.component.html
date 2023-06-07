@@ -1,20 +1,18 @@
-<div class="container">
-  <div class="row d-flex justify-content-center align-items-center">
-    <div class="col-md-9 col-lg-6 col-xl-5">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-        class="img-fluid"
-        alt="Sample image"
-      />
-    </div>
+<div class="d-flex flex-column  align-items-center">
+  <div>
+    <img
+      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+      class="img-fluid"
+      alt="Sample image"
+    />
   </div>
   <div *ngIf="isLoading" class="text-center">
     <div class="spinner-border" role="status"></div>
   </div>
-  <form [formGroup]="loginForm" (ngSubmit)="signIn()" *ngIf="!isLoading">
-    <!-- Email input -->
-    <div class="row justify-content-center">
-      <div *ngIf="!token" class="col-md-6">
+  <div>
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()" *ngIf="!isLoading">
+      <!-- Email input -->
+      <div *ngIf="!authService.isLoggedIn()">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput type="email" formControlName="email" />
@@ -23,11 +21,9 @@
           </mat-error>
         </mat-form-field>
       </div>
-    </div>
 
-    <!-- Password input -->
-    <div class="row justify-content-center">
-      <div *ngIf="!token" class="col-md-6">
+      <!-- Password input -->
+      <div *ngIf="!authService.isLoggedIn()">
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
           <input
@@ -41,16 +37,12 @@
           </mat-error>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
+      <div>
         <mat-error *ngIf="errors" class="text-center">
           {{ errors }}
         </mat-error>
       </div>
-    </div>
-    <div class="row justify-content-center mt-2 mb-5">
-      <div *ngIf="!token" class="col-md-6 d-flex justify-content-center">
+      <div *ngIf="!authService.isLoggedIn()" class="text-center">
         <button
           mat-raised-button
           color="primary"
@@ -60,9 +52,7 @@
           Login
         </button>
       </div>
-     
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
-<!-- Copyright -->
-<app-footer></app-footer>
+

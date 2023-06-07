@@ -1,6 +1,6 @@
 .demo-table {
   table-layout: fixed;
-  width: 100%;
+  width: 80%;
   border-collapse: collapse;
 }
 .demo-table-cell {
@@ -9,6 +9,4 @@
   padding: 8px;
 }
 
-mat-form-field {
-  width: 100%;
-}
+

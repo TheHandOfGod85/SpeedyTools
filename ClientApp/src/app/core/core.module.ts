@@ -32,6 +32,6 @@ import { MatMenuModule } from '@angular/material/menu';
     MatMenuModule,
   ],
   providers: [AuthService],
-  exports: [HomeComponent, NavbarComponent],
+  exports: [HomeComponent, NavbarComponent, FooterComponent],
 })
 export class CoreModule {}
