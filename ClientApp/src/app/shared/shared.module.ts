@@ -10,6 +10,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ResponsiveService } from './services/responsive.service';
+import { DialogService } from './services/dialog.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [NotFoundComponent],
@@ -20,6 +22,7 @@ import { ResponsiveService } from './services/responsive.service';
     FormsModule,
     MatButtonModule,
     RouterModule,
+    MatDialogModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -29,7 +32,12 @@ import { ResponsiveService } from './services/responsive.service';
       },
     }),
   ],
-  providers: [AuthInterceptorProvider, AppErrorProvider, ResponsiveService],
-  exports: [FormsModule, MatButtonModule, CommonModule],
+  providers: [
+    AuthInterceptorProvider,
+    AppErrorProvider,
+    ResponsiveService,
+    DialogService,
+  ],
+  exports: [FormsModule, MatButtonModule, CommonModule, MatDialogModule],
 })
 export class SharedModule {}

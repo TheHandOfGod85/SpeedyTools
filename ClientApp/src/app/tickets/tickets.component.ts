@@ -1,10 +1,13 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TicketsService } from './tickets.service';
 import { Ticket } from 'shared/models/Ticket';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ResponsiveService } from 'shared/services/responsive.service';
+import { DialogService } from 'shared/services/dialog.service';
+import { CreateTicketComponent } from './components/create-ticket/create-ticket.component';
+import { MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tickets',
@@ -18,7 +21,8 @@ export class TicketsComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private ticketService: TicketsService,
-    public responsiveService: ResponsiveService
+    public responsiveService: ResponsiveService,
+    private dialog: DialogService
   ) {}
 
   ngOnInit() {
@@ -45,5 +49,17 @@ export class TicketsComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  openDialog() {
+    const dialogConfig: MatDialogConfig = {
+      width: '500px',
+      height: '450px',
+    };
+    this.dialog.openDialog(CreateTicketComponent, dialogConfig).subscribe({
+      next: (result: any) => {
+        this.getAllTickets();
+      },
+    });
   }
 }

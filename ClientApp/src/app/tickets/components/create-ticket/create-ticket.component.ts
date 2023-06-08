@@ -1,8 +1,10 @@
 import { TicketsService } from './../../tickets.service';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogService } from 'shared/services/dialog.service';
+import { Ticket } from 'shared/models/Ticket';
 
 @Component({
   selector: 'app-create-ticket',
@@ -14,7 +16,8 @@ export class CreateTicketComponent {
   constructor(
     private _fb: FormBuilder,
     private ticketService: TicketsService,
-    private router: Router
+    private snackBar: MatSnackBar,
+    public dialog: DialogService
   ) {
     this.ticketForm = this._fb.group({
       title: ['', Validators.required],
@@ -25,9 +28,10 @@ export class CreateTicketComponent {
   onFormSubmit() {
     if (this.ticketForm.valid) {
       this.ticketService.create(this.ticketForm.value, 'create').subscribe({
-        next: (value: any) => {
-          this.router.navigateByUrl('tickets');
-          console.log(value);
+        next: (ticketId: Ticket) => {
+          this.dialog.closeDialog();
+          this.snackBar.open('Ticket created successfully!', 'Done');
+          console.log(ticketId);
         },
         error: (err: any) => {
           console.log(err);

@@ -23,7 +23,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ReactiveFormsModule,
     MatPaginatorModule,
   ],
-  exports: [TicketsComponent],
+  exports: [TicketsComponent, CreateTicketComponent],
   providers: [TicketsService],
 })
 export class TicketsModule {}
