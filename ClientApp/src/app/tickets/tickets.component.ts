@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { TicketsService } from './tickets.service';
 import { Ticket } from 'shared/models/Ticket';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ResponsiveService } from 'shared/services/responsive.service';
 
 @Component({
   selector: 'app-tickets',
@@ -15,7 +16,10 @@ export class TicketsComponent implements OnInit {
   dataSource!: MatTableDataSource<Ticket>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  constructor(private ticketService: TicketsService) {}
+  constructor(
+    private ticketService: TicketsService,
+    public responsiveService: ResponsiveService
+  ) {}
 
   ngOnInit() {
     this.getAllTickets();

@@ -8,5 +8,6 @@
   text-align: left;
   padding: 8px;
 }
-
-
+.header-cell {
+  color: blue;
+}
