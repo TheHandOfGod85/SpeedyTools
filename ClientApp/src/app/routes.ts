@@ -7,7 +7,7 @@ import { TicketsComponent } from './tickets/tickets.component';
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'tickets', component: TicketsComponent },
-  { path: 'create', component: CreateTicketComponent, pathMatch:"full" },
+  { path: 'create', component: CreateTicketComponent, pathMatch: 'full' },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '/404' },
 ];

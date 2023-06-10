@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { TicketsComponent } from './tickets.component';
 import { SharedModule } from 'shared/shared.module';
 import { TicketsService } from './tickets.service';
 import { MatTableModule } from '@angular/material/table';
@@ -10,9 +9,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { TicketsComponent } from './tickets.component';
+import { TableTicketComponent } from './components/table-ticket/table-ticket.component';
 
 @NgModule({
-  declarations: [TicketsComponent, CreateTicketComponent],
+  declarations: [TicketsComponent, CreateTicketComponent, TableTicketComponent],
   imports: [
     SharedModule,
     MatInputModule,
@@ -23,7 +24,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ReactiveFormsModule,
     MatPaginatorModule,
   ],
-  exports: [TicketsComponent, CreateTicketComponent],
+  exports: [TicketsComponent, CreateTicketComponent, TableTicketComponent],
   providers: [TicketsService],
 })
 export class TicketsModule {}

@@ -47,7 +47,7 @@ namespace SpeedyTools.Application.Services.Implementations
             var tokendescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddDays(5),
                 SigningCredentials = creds
             };
 
