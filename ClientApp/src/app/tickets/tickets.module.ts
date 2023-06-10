@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TicketsComponent } from './tickets.component';
 import { TableTicketComponent } from './components/table-ticket/table-ticket.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [TicketsComponent, CreateTicketComponent, TableTicketComponent],

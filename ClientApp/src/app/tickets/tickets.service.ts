@@ -7,7 +7,7 @@ import { DataService } from 'shared/services/data.service';
   providedIn: 'root',
 })
 export class TicketsService extends DataService<Ticket> {
-  protected override url: string = 'http://localhost:7197/ticket/';
+  protected override url: string = 'http://localhost:7197/api/';
   constructor(http: HttpClient) {
     super(http);
   }

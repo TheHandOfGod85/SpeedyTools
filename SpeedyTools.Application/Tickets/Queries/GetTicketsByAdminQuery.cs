@@ -25,6 +25,7 @@ namespace SpeedyTools.Application.Tickets.Queries
         public async Task<List<TicketDto>> Handle(GetTicketsByAdminQuery request, CancellationToken cancellationToken)
         {
             return await _dataContext.Tickets
+                .Include(x => x.AppUser)
                 .Select(x => new TicketDto
                 {
                     Title = x.Title,
@@ -33,7 +34,8 @@ namespace SpeedyTools.Application.Tickets.Queries
                     Closed = x.Closed,
                     Created = x.Created,
                     LastModified = x.LastModified,
-                    AppUserId = x.AppUserId
+                    AppUserId = x.AppUserId,
+                    Name = x.AppUser.Name
                 })
                 .ToListAsync();
         }

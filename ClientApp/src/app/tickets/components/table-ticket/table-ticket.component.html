@@ -23,6 +23,13 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="createdBy">
+        <th mat-sort-header mat-header-cell *matHeaderCellDef>CREATED BY</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.created | date : "dd-MM-yyyy HH:mm" }}
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="title">
         <th mat-sort-header mat-header-cell *matHeaderCellDef>TITLE</th>
         <td mat-cell *matCellDef="let element">
@@ -37,8 +44,33 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button class="mx-2" color="warn">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+          </button>
+          <button
+            *ngIf="authService.currentUser.role === 'Admin'"
+            mat-icon-button
+            class="mx-2"
+            color="accent"
+          >
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+          <button
+            (click)="deleteTicket(element.id)"
+            *ngIf="authService.currentUser.role === 'Admin'"
+            mat-icon-button
+            color="primary"
+          >
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </td>
+      </ng-container>
 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       <!-- Row shown when there is no matching data. -->
       <div class="align-self-center">

@@ -11,5 +11,6 @@ namespace SpeedyTools.Application.Contracts.Tickets.Responses
         public string Description { get; set; }
         public DateTime LastModified { get; set; }
         public Guid AppUserId { get; set; }
+        public string Name { get; set; }
     }
 }

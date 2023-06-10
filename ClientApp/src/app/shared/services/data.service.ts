@@ -1,6 +1,4 @@
-import {
-  HttpClient,
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -20,10 +18,10 @@ export abstract class DataService<T> {
   update(resource: T, id?: string): Observable<T> {
     return this.http.put<T>(this.url + id, resource);
   }
-  delete(id?: string): Observable<T> {
-    return this.http.delete<T>(this.url + id);
+  delete(id: string, endPoint?: string): Observable<T> {
+    return this.http.delete<T>(this.url + endPoint + id);
   }
-  get(id?: string): Observable<T> {
-    return this.http.delete<T>(this.url + id);
+  get(endPoint?: string, id?: string): Observable<T> {
+    return this.http.get<T>(this.url + endPoint + id);
   }
 }

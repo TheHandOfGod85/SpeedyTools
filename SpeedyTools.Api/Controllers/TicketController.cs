@@ -38,7 +38,7 @@ namespace SpeedyTools.Api.Controllers
             return ProcessGet(result);
         }
         
-        [HttpPost("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var result = await Mediator.Send(new DeleteTicketCommand { Id = id, AppUserId = UserId });

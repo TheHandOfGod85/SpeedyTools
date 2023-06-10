@@ -16,9 +16,11 @@ export class DialogService {
 
   openDialog(
     component: any,
-    config?: MatDialogConfig
+    config?: MatDialogConfig,
+    data?: any
   ): Observable<any> {
     const dialogConfig: MatDialogConfig = config || {}; // Use supplied config or empty object as default
+    dialogConfig.data = data || {}; // Assign the data object to the dialog config
 
     this.dialogRef = this.dialog.open(component, dialogConfig);
 

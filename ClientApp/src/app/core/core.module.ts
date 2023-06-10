@@ -14,9 +14,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { PopUpComponent } from './components/pop-up/pop-up.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [HomeComponent, FooterComponent, NavbarComponent],
+  declarations: [
+    HomeComponent,
+    FooterComponent,
+    NavbarComponent,
+    PopUpComponent,
+  ],
   imports: [
     RouterModule.forChild([]),
     SharedModule,
@@ -32,6 +39,6 @@ import { MatMenuModule } from '@angular/material/menu';
     MatMenuModule,
   ],
   providers: [AuthService],
-  exports: [HomeComponent, NavbarComponent, FooterComponent],
+  exports: [HomeComponent, NavbarComponent, FooterComponent, PopUpComponent],
 })
 export class CoreModule {}
