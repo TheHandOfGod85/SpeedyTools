@@ -18,8 +18,8 @@ namespace SpeedyTools.Infrastructure
             // Seed Roles
             if (!roleManager.RoleExistsAsync("Admin").GetAwaiter().GetResult())
             {
-                 roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
-                 roleManager.CreateAsync(new IdentityRole("Engineer")).GetAwaiter().GetResult();
+                roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
+                roleManager.CreateAsync(new IdentityRole("Engineer")).GetAwaiter().GetResult();
             }
             // Seed User
             var user = new AppUser
@@ -41,10 +41,10 @@ namespace SpeedyTools.Infrastructure
 
                 var userStore = new UserStore<AppUser>(context);
                 var result = userStore.CreateAsync(user);
+                // Assign Admin Role to User
+                userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+                await context.SaveChangesAsync();
             }
-            // Assign Admin Role to User
-            userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
-            
 
             // Seed ticket
             if (!context.Tickets.Any())
@@ -55,13 +55,12 @@ namespace SpeedyTools.Infrastructure
                     Title = "Sample Ticket",
                     Created = DateTime.Now,
                     Description = "This is a sample ticket.",
-                    AppUserId = Guid.Parse("2b49f544-7ced-4cff-bc9c-e223f6059cf4") // Assign the ticket to the seeded user
+                    AppUserId = Guid.Parse("2b49f544-7ced-4cff-bc9c-e223f6059cf4"), // Assign the ticket to the seeded user
                 };
 
                 context.Tickets.Add(ticket);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
-            await context.SaveChangesAsync();
         }
     }
 }

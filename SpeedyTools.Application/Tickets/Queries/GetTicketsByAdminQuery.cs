@@ -1,12 +1,10 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Application.Contracts.Tickets.Responses;
+using SpeedyTools.Domain.Models.TicketAggregate;
+using SpeedyTools.Domain.Models.UserAggregate;
 using SpeedyTools.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SpeedyTools.Application.Tickets.Queries
 {
@@ -24,20 +22,21 @@ namespace SpeedyTools.Application.Tickets.Queries
 
         public async Task<List<TicketDto>> Handle(GetTicketsByAdminQuery request, CancellationToken cancellationToken)
         {
-            return await _dataContext.Tickets
-                .Include(x => x.AppUser)
-                .Select(x => new TicketDto
+            var tickets = await (from ticket in _dataContext.Tickets
+                join appUser in _dataContext.AppUsers on ticket.AppUserId.ToString() equals appUser.Id
+                select new TicketDto
                 {
-                    Title = x.Title,
-                    Id = x.Id,
-                    Description = x.Description,
-                    Closed = x.Closed,
-                    Created = x.Created,
-                    LastModified = x.LastModified,
-                    AppUserId = x.AppUserId,
-                    Name = x.AppUser.Name
-                })
-                .ToListAsync();
+                    Title = ticket.Title,
+                    Id = ticket.Id,
+                    Description = ticket.Description,
+                    Closed = ticket.Closed,
+                    Created = ticket.Created,
+                    LastModified = ticket.LastModified,
+                    AppUserId = ticket.AppUserId,
+                    AppUserName = appUser.Name
+                }).ToListAsync();
+
+            return tickets;
         }
     }
 }

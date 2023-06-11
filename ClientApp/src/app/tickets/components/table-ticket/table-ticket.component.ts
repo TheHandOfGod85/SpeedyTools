@@ -4,7 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ResponsiveService } from 'shared/services/responsive.service';
-import { DialogService } from 'shared/services/dialog.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TicketsService } from 'app/tickets/tickets.service';
 import { CreateTicketComponent } from '../create-ticket/create-ticket.component';
@@ -20,7 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TableTicketComponent {
   displayedColumns: string[] = [
     'created',
-    'createdBy',
+    'appUserName',
     'title',
     'description',
     'action',
@@ -31,10 +30,9 @@ export class TableTicketComponent {
   constructor(
     private ticketService: TicketsService,
     public responsiveService: ResponsiveService,
-    private dialog: DialogService,
     private popUp: MatDialog,
     public authService: AuthService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -63,15 +61,15 @@ export class TableTicketComponent {
         submit: () =>
           this.ticketService.delete(id, `delete/`).subscribe({
             next: () => {
-              this.getAllTickets();
+              this.snackBar.open('Ticket deleted successfully!', 'Done');
             },
           }),
       },
     };
-    const afterOpen = this.popUp.open(PopUpComponent, dialogConfig);
-    afterOpen.afterClosed().subscribe({
+    var afteClosed = this.popUp.open(PopUpComponent, dialogConfig);
+    afteClosed.afterClosed().subscribe({
       next: () => {
-        this.snackBar.open('Ticket deleted successfully!', 'Done');
+        this.getAllTickets();
       },
     });
   }
@@ -90,7 +88,8 @@ export class TableTicketComponent {
       width: '350px',
       height: '390px',
     };
-    this.dialog.openDialog(CreateTicketComponent, dialogConfig).subscribe({
+    var afteClosed = this.popUp.open(CreateTicketComponent, dialogConfig);
+    afteClosed.afterClosed().subscribe({
       next: () => {
         this.getAllTickets();
       },

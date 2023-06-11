@@ -6,4 +6,5 @@ export interface Ticket {
   description: string;
   lastModified: Date;
   userId: string;
+  userName: string;
 }

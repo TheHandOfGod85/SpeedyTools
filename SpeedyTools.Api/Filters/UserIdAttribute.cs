@@ -15,7 +15,7 @@ namespace SpeedyTools.Api.Filters
                 return;
             }
 
-            context.HttpContext.Items["UserId"] = Guid.Parse(userId);
+            context.HttpContext.Items["nameid"] = Guid.Parse(userId);
         }
     }
 }

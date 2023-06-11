@@ -24,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     RouterModule.forChild([]),
     ReactiveFormsModule,
     MatPaginatorModule,
+    MatDialogModule
   ],
   exports: [TicketsComponent, CreateTicketComponent, TableTicketComponent],
   providers: [TicketsService],

@@ -318,11 +318,9 @@ namespace SpeedyTools.Infrastructure.Migrations
 
             modelBuilder.Entity("SpeedyTools.Domain.Models.TicketAggregate.Ticket", b =>
                 {
-                    b.HasOne("SpeedyTools.Domain.Models.UserAggregate.AppUser", "AppUser")
+                    b.HasOne("SpeedyTools.Domain.Models.UserAggregate.AppUser", null)
                         .WithMany("Tickets")
                         .HasForeignKey("AppUserId1");
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("SpeedyTools.Domain.Models.UserAggregate.AppUser", b =>

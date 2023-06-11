@@ -16,7 +16,7 @@ namespace SpeedyTools.Api.Controllers
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices
        .GetService<IMediator>();
 
-        protected Guid UserId => (Guid)HttpContext.Items["UserId"];
+        protected Guid UserId => (Guid)HttpContext.Items["nameid"];
 
         protected ActionResult ProcessUpdate(bool result)
         {

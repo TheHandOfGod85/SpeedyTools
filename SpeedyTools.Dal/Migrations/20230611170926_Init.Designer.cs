@@ -12,8 +12,8 @@ using SpeedyTools.Infrastructure;
 namespace SpeedyTools.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230520111954_init")]
-    partial class init
+    [Migration("20230611170926_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -321,11 +321,9 @@ namespace SpeedyTools.Infrastructure.Migrations
 
             modelBuilder.Entity("SpeedyTools.Domain.Models.TicketAggregate.Ticket", b =>
                 {
-                    b.HasOne("SpeedyTools.Domain.Models.UserAggregate.AppUser", "AppUser")
+                    b.HasOne("SpeedyTools.Domain.Models.UserAggregate.AppUser", null)
                         .WithMany("Tickets")
                         .HasForeignKey("AppUserId1");
-
-                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("SpeedyTools.Domain.Models.UserAggregate.AppUser", b =>

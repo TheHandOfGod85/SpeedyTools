@@ -1,19 +1,29 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SpeedyTools.Api.Contracts.AppUsers.Requestes;
+using SpeedyTools.Api.Contracts.Tickets.Requests;
+using SpeedyTools.Api.Filters;
 using SpeedyTools.Application.AppUsers.Commands;
 using SpeedyTools.Application.AppUsers.Queries;
 using SpeedyTools.Application.Contracts.AppUsers.Requests;
+using SpeedyTools.Application.Tickets.Commands;
 using SpeedyTools.Application.Tickets.Queries;
 
 namespace SpeedyTools.Api.Controllers
 {
     [ApiController]
-    //[Route("admin")]
-    //[Authorize(Roles = "Admin")]
+    [Route("admin")]
+    [Authorize(Roles = "Admin")]
+    [UserId]
     public class AdminController : BaseController
     {
-        
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] CreateTicketDto createTicketDto)
+        {
+            createTicketDto.AppUserId = UserId;
+            var command = createTicketDto.Map();
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
 
         [HttpPost("createRole")]
         public async Task<IActionResult> CreateRole(string roleName)
@@ -39,6 +49,13 @@ namespace SpeedyTools.Api.Controllers
         {
             var result = await Mediator.Send(new GetTicketsByAdminQuery());
             return ProcessGet(result);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var result = await Mediator.Send(new DeleteTicketCommand { Id = id, AppUserId = UserId });
+            return ProcessDelete(result);
         }
     }
 }

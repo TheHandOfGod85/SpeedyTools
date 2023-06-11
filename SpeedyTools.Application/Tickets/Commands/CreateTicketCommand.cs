@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SpeedyTools.Domain.Models.TicketAggregate;
+using SpeedyTools.Domain.Models.UserAggregate;
 using SpeedyTools.Infrastructure;
 using System.Text.Json;
 
@@ -22,7 +23,7 @@ namespace SpeedyTools.Application.Tickets.Commands
                 Title = Title,
                 Created = DateTime.Now,
                 Description = Description,
-                AppUserId = AppUserId
+                AppUserId = AppUserId,
             };
         }
     }

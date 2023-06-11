@@ -12,8 +12,7 @@ namespace SpeedyTools.Domain.Models.TicketAggregate
         public string Description { get;  set; }
         public DateTime LastModified { get;  set; }
 
-        [ForeignKey(nameof(AppUserId))]
+        [ForeignKey(nameof(Id))]
         public Guid AppUserId { get; set; }
-        public AppUser? AppUser { get; set; }
     }
 }

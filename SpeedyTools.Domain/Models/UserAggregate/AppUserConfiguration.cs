@@ -8,7 +8,7 @@ namespace SpeedyTools.Domain.Models.UserAggregate
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {
-            
+           
         }
     }
 }
