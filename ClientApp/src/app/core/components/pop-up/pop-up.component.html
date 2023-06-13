@@ -1,16 +1,12 @@
-<div class="container">
-  <!--Title Dialog-->
-  <div mat-dialog-title class="text-center">
-    <h1>{{ input?.title }}</h1>
-  </div>
-  <div mat-dialog-content class="d-flex flex-column">
-    <p>{{ input?.content }}</p>
-  </div>
+<!--Title Dialog-->
+<div mat-dialog-title align="center">
+  <h1>{{ input?.title }}</h1>
+</div>
+<div mat-dialog-content>
+  <p>{{ input?.content }}</p>
   <!-- Buttons -->
-  <div mat-dialog-actions class="d-flex justify-content-center">
+  <div mat-dialog-actions align="center">
     <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button (click)="onSubmit()" mat-raised-button color="warn">
-      Delete
-    </button>
+    <button (click)="onSubmit()" mat-raised-button color="warn">Delete</button>
   </div>
 </div>

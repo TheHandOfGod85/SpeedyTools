@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogService } from 'shared/services/dialog.service';
 
 @Component({
   selector: 'app-create-ticket',
@@ -17,7 +16,6 @@ export class CreateTicketComponent {
     private _fb: FormBuilder,
     private ticketService: TicketsService,
     private snackBar: MatSnackBar,
-    public dialog: DialogService,
     public ref?: MatDialogRef<CreateTicketComponent>
   ) {
     this.ticketForm = this._fb.group({
@@ -31,7 +29,9 @@ export class CreateTicketComponent {
       this.ticketService.create(this.ticketForm.value, 'create').subscribe({
         next: () => {
           this.ref?.close();
-          this.snackBar.open('Ticket created successfully!', 'Done');
+          this.snackBar.open('Ticket created successfully!', 'Done', {
+            verticalPosition: 'top',
+          });
         },
         error: (err: any) => {
           console.log(err);

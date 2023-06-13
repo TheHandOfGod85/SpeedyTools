@@ -12,9 +12,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TicketsComponent } from './tickets.component';
 import { TableTicketComponent } from './components/table-ticket/table-ticket.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TicketListComponent } from './components/ticket-list/ticket-list.component';
 
 @NgModule({
-  declarations: [TicketsComponent, CreateTicketComponent, TableTicketComponent],
+  declarations: [
+    TicketsComponent,
+    CreateTicketComponent,
+    TableTicketComponent,
+    TicketListComponent,
+  ],
   imports: [
     SharedModule,
     MatInputModule,
@@ -24,7 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     RouterModule.forChild([]),
     ReactiveFormsModule,
     MatPaginatorModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   exports: [TicketsComponent, CreateTicketComponent, TableTicketComponent],
   providers: [TicketsService],

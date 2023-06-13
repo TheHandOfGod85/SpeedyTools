@@ -9,8 +9,6 @@ import { AppErrorProvider } from './errors/app-error-handler';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { ResponsiveService } from './services/responsive.service';
-import { DialogService } from './services/dialog.service';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -32,12 +30,13 @@ import { MatDialogModule } from '@angular/material/dialog';
       },
     }),
   ],
-  providers: [
-    AuthInterceptorProvider,
-    AppErrorProvider,
-    ResponsiveService,
-    DialogService,
+  providers: [AuthInterceptorProvider, AppErrorProvider],
+  exports: [
+    FormsModule,
+    MatButtonModule,
+    CommonModule,
+    MatDialogModule,
+    MatSnackBarModule,
   ],
-  exports: [FormsModule, MatButtonModule, CommonModule, MatDialogModule],
 })
 export class SharedModule {}

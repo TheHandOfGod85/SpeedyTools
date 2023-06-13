@@ -1,33 +1,29 @@
-<div class="container">
-  <!--Title Dialog-->
-  <div mat-dialog-title class="text-center">
-    <h1>Ticket Form</h1>
-  </div>
-  <div mat-dialog-content class="d-flex flex-column">
-    <form [formGroup]="ticketForm">
-      <!-- Title field -->
-      <mat-form-field appearance="outline" class="mt-2 mb-1">
-        <mat-label>Title</mat-label>
-        <input matInput type="text" formControlName="title" />
-        <mat-error *ngIf="ticketForm.get('title')?.errors?.['required']">
-          Title is required
-        </mat-error>
-      </mat-form-field>
-      <!-- Description field -->
-      <mat-form-field appearance="outline" class="col-12">
-        <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description"></textarea>
-        <mat-error *ngIf="ticketForm.get('description')?.errors?.['required']">
-          Description is required
-        </mat-error>
-      </mat-form-field>
-    </form>
-  </div>
+<!--Title Dialog-->
+<div mat-dialog-title align="center">
+  <h1>Ticket Form</h1>
+</div>
+<div mat-dialog-content>
+  <form [formGroup]="ticketForm">
+    <!-- Title field -->
+    <mat-form-field appearance="outline" class="mt-2 mb-1">
+      <mat-label>Title</mat-label>
+      <input matInput type="text" formControlName="title" />
+      <mat-error *ngIf="ticketForm.get('title')?.errors?.['required']">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+    <!-- Description field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="ticketForm.get('description')?.errors?.['required']">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+  </form>
   <!-- Buttons -->
-  <div mat-dialog-actions class="d-flex justify-content-center">
-    <button mat-raised-button type="button" (click)="ref?.close();">
-      Cancel
-    </button>
+  <div mat-dialog-actions align="center">
+    <button mat-raised-button type="button" mat-dialog-close>Cancel</button>
     <button
       (click)="onFormSubmit()"
       mat-raised-button

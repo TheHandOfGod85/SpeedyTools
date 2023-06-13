@@ -3,7 +3,6 @@ import { Ticket } from 'shared/models/Ticket';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ResponsiveService } from 'shared/services/responsive.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { TicketsService } from 'app/tickets/tickets.service';
 import { CreateTicketComponent } from '../create-ticket/create-ticket.component';
@@ -29,7 +28,6 @@ export class TableTicketComponent {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private ticketService: TicketsService,
-    public responsiveService: ResponsiveService,
     private popUp: MatDialog,
     public authService: AuthService,
     private snackBar: MatSnackBar
@@ -61,7 +59,9 @@ export class TableTicketComponent {
         submit: () =>
           this.ticketService.delete(id, `delete/`).subscribe({
             next: () => {
-              this.snackBar.open('Ticket deleted successfully!', 'Done');
+              this.snackBar.open('Ticket deleted successfully!', 'Done', {
+                verticalPosition: 'top',
+              });
             },
           }),
       },
