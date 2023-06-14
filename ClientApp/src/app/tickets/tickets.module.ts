@@ -13,6 +13,11 @@ import { TicketsComponent } from './tickets.component';
 import { TableTicketComponent } from './components/table-ticket/table-ticket.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TicketListComponent } from './components/ticket-list/ticket-list.component';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -31,8 +36,17 @@ import { TicketListComponent } from './components/ticket-list/ticket-list.compon
     ReactiveFormsModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatListModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule
   ],
-  exports: [TicketsComponent, CreateTicketComponent, TableTicketComponent],
+  exports: [
+    TicketsComponent,
+    CreateTicketComponent,
+    TableTicketComponent,
+    TicketListComponent,
+  ],
   providers: [TicketsService],
 })
 export class TicketsModule {}
