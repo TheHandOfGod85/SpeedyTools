@@ -16,12 +16,18 @@
       Add
     </button>
   </div>
-  <ng-container *ngFor="let ticket of tickets">
+  <ng-container *ngIf="tickets.length > 0; else noTickets">
     <div class="col-xs-12">
       <app-ticket-list
+        *ngFor="let ticket of tickets"
         [ticket]="ticket"
         (deleteTicket)="emitDeleteTicket($event)"
       ></app-ticket-list>
     </div>
   </ng-container>
+  <ng-template #noTickets>
+    <div class="col-xs-12 text-center mt-5">
+      <h2>No tickets</h2>
+    </div>
+  </ng-template>
 </div>
