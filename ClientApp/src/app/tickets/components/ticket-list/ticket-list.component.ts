@@ -9,8 +9,4 @@ import { Ticket } from 'shared/models/Ticket';
 export class TicketListComponent {
   @Input('ticket') ticket!: Ticket;
   @Output() deleteTicket: EventEmitter<string> = new EventEmitter<string>();
-
-  onDeleteTicket() {
-    this.deleteTicket.emit(this.ticket.id);
-  }
 }
