@@ -31,6 +31,10 @@ export class TableTicketComponent {
   ];
 
   constructor(public authService: AuthService) {}
+  ngAfterViewInit() {
+    this.tickets.paginator = this.paginator;
+    this.tickets.sort = this.sort;
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
