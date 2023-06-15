@@ -12,11 +12,11 @@
       mat-raised-button
       type="button"
       color="primary"
-      (click)="openDialog()"
+      (click)="openDialog.emit()"
     >
       Add
     </button>
-    <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table matSort mat-table [dataSource]="tickets" class="mat-elevation-z8">
       <ng-container matColumnDef="created">
         <th
           mat-sort-header
@@ -89,7 +89,7 @@
             <i class="fa fa-pencil" aria-hidden="true"></i>
           </button>
           <button
-            (click)="deleteTicket(element.id)"
+            (click)="deleteTicket.emit(element.id)"
             *ngIf="authService.currentUser.role === 'Admin'"
             mat-icon-button
             color="primary"
@@ -104,9 +104,7 @@
       <!-- Row shown when there is no matching data. -->
       <div class="align-self-center">
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">
-            No data matching the filter "{{ input.value }}"
-          </td>
+          <td class="mat-cell" colspan="4">No data matching the filter</td>
         </tr>
       </div>
     </table>

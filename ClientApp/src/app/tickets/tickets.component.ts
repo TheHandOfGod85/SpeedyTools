@@ -1,15 +1,13 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TicketsService } from './tickets.service';
 import { Ticket } from 'shared/models/Ticket';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreateTicketComponent } from './components/create-ticket/create-ticket.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopUpComponent } from 'app/core/components/pop-up/pop-up.component';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-tickets',
@@ -17,8 +15,7 @@ import { PopUpComponent } from 'app/core/components/pop-up/pop-up.component';
   styleUrls: [],
 })
 export class TicketsComponent implements OnInit {
-  tickets: Ticket[] = [];
-  @Output() deleteTicket: EventEmitter<string> = new EventEmitter<string>();
+  dataSource!: MatTableDataSource<Ticket>;
   constructor(
     private ticketService: TicketsService,
     private popUp: MatDialog,
@@ -26,13 +23,14 @@ export class TicketsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource<Ticket>([]);
     this.getAllTickets();
   }
 
   getAllTickets() {
     this.ticketService.getAll('getAllTickets').subscribe({
       next: (tickets: Ticket[]) => {
-        this.tickets = tickets;
+        this.dataSource.data = tickets;
       },
       error: (err: any) => {
         console.log(err);
@@ -40,7 +38,7 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-  emitDeleteTicket(id: string) {
+  onDeleteTicket(id: string) {
     const dialogConfig: MatDialogConfig = {
       width: '350px',
       height: '290px',
@@ -65,7 +63,7 @@ export class TicketsComponent implements OnInit {
     });
   }
 
-  openDialog() {
+  onOpenDialog() {
     const dialogConfig: MatDialogConfig = {
       width: '350px',
       height: '390px',
