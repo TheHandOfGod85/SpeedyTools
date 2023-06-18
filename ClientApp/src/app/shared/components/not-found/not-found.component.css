@@ -1,29 +1,21 @@
-body {
-  background-color: #95c2de;
-}
-
 .mainbox {
   background-color: #95c2de;
   margin: auto;
   height: 600px;
-  width: 600px;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .err {
   color: #ffffff;
   font-family: "Nunito Sans", sans-serif;
   font-size: 11rem;
-  position: absolute;
-  left: 20%;
-  top: 8%;
 }
 
 .far {
-  position: absolute;
   font-size: 8.5rem;
-  left: 42%;
-  top: 15%;
   color: #ffffff;
 }
 
@@ -31,19 +23,14 @@ body {
   color: #ffffff;
   font-family: "Nunito Sans", sans-serif;
   font-size: 11rem;
-  position: absolute;
-  left: 68%;
-  top: 8%;
 }
 
 .msg {
   text-align: center;
   font-family: "Nunito Sans", sans-serif;
   font-size: 1.6rem;
-  position: absolute;
-  left: 16%;
-  top: 45%;
   width: 75%;
+  margin-top: 2rem;
 }
 
 a {
@@ -53,4 +40,58 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Responsive Styles */
+
+@media screen and (max-width: 768px) {
+  .err {
+    font-size: 7rem;
+    left: 15%;
+  }
+
+  .far {
+    font-size: 5rem;
+    left: 35%;
+    top: 12%;
+  }
+
+  .err2 {
+    font-size: 7rem;
+    left: 55%;
+  }
+
+  .msg {
+    font-size: 1.2rem;
+    left: 10%;
+    top: 38%;
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .err {
+    font-size: 4rem;
+    left: 10%;
+    top: 5%;
+  }
+
+  .far {
+    font-size: 3rem;
+    left: 30%;
+    top: 8%;
+  }
+
+  .err2 {
+    font-size: 4rem;
+    left: 50%;
+    top: 5%;
+  }
+
+  .msg {
+    font-size: 1rem;
+    left: 5%;
+    top: 35%;
+    width: 90%;
+  }
 }

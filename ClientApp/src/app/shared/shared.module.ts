@@ -10,6 +10,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthGuard } from './guards/auth-guard.service';
 
 @NgModule({
   declarations: [NotFoundComponent],
