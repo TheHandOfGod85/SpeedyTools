@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Ticket } from 'shared/models/Ticket';
 import { AuthService } from 'app/core/services/auth.service';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -17,6 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./table-ticket.component.css'],
 })
 export class TableTicketComponent {
+  currentPage = 0;
   @Output() openDialog = new EventEmitter<void>();
   @Output() deleteTicket = new EventEmitter<string>();
   @Input() tickets = new MatTableDataSource<Ticket>();

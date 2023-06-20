@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TicketsService } from './tickets.service';
 import { Ticket } from 'shared/models/Ticket';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreateTicketComponent } from './components/create-ticket/create-ticket.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopUpComponent } from 'app/core/components/pop-up/pop-up.component';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-tickets',

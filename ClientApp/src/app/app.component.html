@@ -1,11 +1,9 @@
-<app-navbar *ngIf="authService.isLoggedIn()"></app-navbar>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12">
-      <router-outlet></router-outlet>
-    </div>
+<app-navbar *ngIf="authService.isLoggedIn(); else home"></app-navbar>
+<ng-template #home>
+  <div class="container-fluid">
+    <app-home></app-home>
   </div>
   <div class="col-xs-12 bg-light p-3 fixed-bottom">
     <app-footer></app-footer>
   </div>
-</div>
+</ng-template>

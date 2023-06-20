@@ -1,37 +1,10 @@
-<div class="row d-none d-lg-block">
+<div class="row">
   <div class="col-xs-12">
+    <!--Table shown on larger screens-->
     <app-table-ticket
       (deleteTicket)="onDeleteTicket($event)"
       (openDialog)="onOpenDialog()"
       [tickets]="dataSource"
     ></app-table-ticket>
   </div>
-</div>
-<div class="row d-sm-block d-lg-none">
-  <h1 class="text-center mt-2">Tickets</h1>
-  <div class="text-center">
-    <button
-      class="mb-2"
-      mat-raised-button
-      type="button"
-      color="primary"
-      (click)="onOpenDialog()"
-    >
-      Add
-    </button>
-  </div>
-  <ng-container *ngIf="dataSource!.data.length > 0; else noTickets">
-    <div class="col-xs-12">
-      <app-ticket-list
-        *ngFor="let ticket of dataSource!.data"
-        [ticket]="ticket"
-        (deleteTicket)="onDeleteTicket($event)"
-      ></app-ticket-list>
-    </div>
-  </ng-container>
-  <ng-template #noTickets>
-    <div class="col-xs-12 text-center mt-5">
-      <h2>No tickets</h2>
-    </div>
-  </ng-template>
 </div>

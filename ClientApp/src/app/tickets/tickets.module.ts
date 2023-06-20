@@ -12,19 +12,17 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TicketsComponent } from './tickets.component';
 import { TableTicketComponent } from './components/table-ticket/table-ticket.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { TicketListComponent } from './components/ticket-list/ticket-list.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-
+import { PaginatorIntlProvider } from 'shared/services/PaginatorIntl.service';
 
 @NgModule({
   declarations: [
     TicketsComponent,
     CreateTicketComponent,
     TableTicketComponent,
-    TicketListComponent,
   ],
   imports: [
     SharedModule,
@@ -39,14 +37,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatListModule,
     MatIconModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
   ],
-  exports: [
-    TicketsComponent,
-    CreateTicketComponent,
-    TableTicketComponent,
-    TicketListComponent,
-  ],
-  providers: [TicketsService],
+  exports: [TicketsComponent, CreateTicketComponent, TableTicketComponent],
+  providers: [TicketsService, PaginatorIntlProvider],
 })
 export class TicketsModule {}

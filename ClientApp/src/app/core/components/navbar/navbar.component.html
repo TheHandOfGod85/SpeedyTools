@@ -1,23 +1,48 @@
-<mat-toolbar color="primary">
-  <span class="title"
-    ><a style="text-decoration: none; color: white" routerLink="/"
-      >SpeedyTools</a
-    >
-  </span>
-  <span class="example-spacer"></span>
-  <div class="menu-wrapper">
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu" class="menu-position">
-      <a mat-menu-item routerLink="tickets">
-        <mat-icon>list</mat-icon>
-        <span>Tickets</span>
-      </a>
-      <button mat-menu-item type="reset" (click)="authService.logout()">
-        <mat-icon>logout</mat-icon>
-        <span>Logout</span>
-      </button>
-    </mat-menu>
-  </div>
+<mat-toolbar class="mat-elevation-z8">
+  <button
+    mat-icon-button
+    *ngIf="sidenav.mode === 'over'"
+    (click)="sidenav.toggle()"
+  >
+    <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+    <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+  </button>
+  SpeedyTools
 </mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <img
+      class="avatar mat-elevation-z8"
+      src="/assets/images/userPlaceholder.jpg"
+      style="height: 50px; width: 50px"
+    />
+    <h4 class="name">{{ authService.currentUser.name }}</h4>
+    <p class="designation">{{ authService.currentUser.role }}</p>
+
+    <mat-divider></mat-divider>
+
+    <button mat-button class="menu-button" routerLink="tickets">
+      <mat-icon>list</mat-icon>
+      <span>Tickets</span>
+    </button>
+    <button mat-button class="menu-button" (click)="authService.logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+
+    <mat-divider></mat-divider>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 bg-light p-3 fixed-bottom">
+      <app-footer></app-footer>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
